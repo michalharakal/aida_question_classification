@@ -3,23 +3,23 @@
 ## Project goal
 Category classification
 
-[ ] Basic project structure @sven
-[ ] Project description @Petra
-[ ] Import data into data frame @Michal
-[ ] Basic data analysis @Andreas
-  [ ] Classes representaion visualization
+- [ ] Basic project structure @sven
+- [ ] Project description @Petra
+- [ ] Import data into data frame @Michal
+- [ ] Basic data analysis @Andreas
+- [ ] Classes representaion visualization
   
-[ ] text processing (tokenize, stemming, lemming)  
+- [ ] text processing (tokenize, stemming, lemming)  
   
-[ ] Data preprocessing
-[ ] Base Model
-[ ] SVM @Andreas @Sven
-[ ] LSTM Model @Michal @Petra
-[ ] F1 validation
-[ ] Model comparision
-[ ] Conclution
-[ ] Report (DOC)
-[ ] Report (Prezi)
+- [ ] Data preprocessing
+- [ ] Base Model
+- [ ] SVM @Andreas @Sven
+- [ ] LSTM Model @Michal @Petra
+- [ ] F1 validation
+- [ ] Model comparision
+- [ ] Conclution
+- [ ] Report (DOC)
+- [ ] Report (Prezi)
 
 
 ## Initial playground
