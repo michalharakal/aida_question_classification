@@ -1,3 +1,9 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[1]:
+
+
 # -*- coding: utf-8 -*-
 """Kopie von Group_A_AN_EDA.ipynb
 
@@ -51,6 +57,10 @@ test_df['question'] = train_df.apply (lambda row: process_question(row["raw"]), 
 
 test_df
 
+
+# In[2]:
+
+
 # In[6]:
     
 train_df.head(5)
@@ -87,6 +97,9 @@ print(f'train_size:\t{train_df.size}\ntest_size:\t{test_df.size}')
 # line occupancy    
 print(f'---train---: {train_df.nunique()}\n')
 print(f'---test---: {test_df.nunique()}')
+
+
+# In[3]:
 
 
 #which categories?
@@ -130,6 +143,10 @@ plt.ylabel('count question')
 plt.title('Distribution subcategories, train')
 plt.show()
 
+
+# In[4]:
+
+
 # In[13]:  
     
 # distribution subcategories (test)
@@ -172,6 +189,10 @@ train_df_top.subcategory.groupby(train_df['category']).value_counts()
 
 test_df.subcategory.value_counts().nlargest(39)
 
+
+# In[5]:
+
+
 # In[17]: 
 
 #len text
@@ -209,8 +230,7 @@ plt.show()
 #average length of question
 al_train = round(train_df['question'].apply(lambda text: len(text.split())).mean())
 al_test = round(test_df['question'].apply(lambda text: len(text.split())).mean())
-print(f'The questions in the train data set have an average of {al_train} tokens, \
-and {al_test} tokens in the test data set.')
+print(f'The questions in the train data set have an average of {al_train} tokens, and {al_test} tokens in the test data set.')
 
 # In[21]:
 
@@ -270,4 +290,42 @@ for column in test_question_df.columns:
 
 if __name__ == '__main__' :
     main()
+
+
+# In[7]:
+
+
+print(train_question_df.shape)
+test_question_df.shape
+
+
+# In[8]:
+
+
+train_question_df.sample(3)
+
+
+# In[17]:
+
+
+train_question_df.columns
+
+
+# In[ ]:
+
+
+
+
+
+# In[22]:
+
+
+#distribution of first word in questions
+train_question_df[0].value_counts()
+
+
+# In[ ]:
+
+
+
 
