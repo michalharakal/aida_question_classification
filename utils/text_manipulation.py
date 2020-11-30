@@ -40,6 +40,17 @@ def clean_text(text):
 
 def stopword_text(text):
     """
+    Remove all words in the text that are in the stopword list
+     
+    Parameters
+    ----------
+    text : string
+    
+    Returns
+    -------
+    string
+        text only stopwords
+     
     """
 
     return " ".join([word for word in text.split() if word not in my_stopwords])
@@ -48,6 +59,17 @@ def stopword_text(text):
 
 def lem_text(text):
     """
+    Group the different inflected forms of a word so they can be analysed as 
+    a single item
+     
+    Parameters
+    ----------
+    text : string
+    
+    Returns
+    -------
+    string
+        text with lemmas
     """
 
     lem_sentence = text.split()
