@@ -6,7 +6,7 @@ nltk.download('wordnet')
 
 def clean_text(text):
     """
-    Regex cleanig of the text. Filters everzthing except alphanureical and '.
+    Regex cleaning of the text. Filters everthing except alphanumerical and '.
     Return is turned into lower case
 
     Parameters
