@@ -3,6 +3,14 @@ import nltk
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 
+# default setting for lemmatizer and stopwords
+nltk.download('wordnet')
+lemmatizer = WordNetLemmatizer()
+
+# remove stop words
+nltk.download('stopwords')
+my_stopwords = set(stopwords.words('english'))
+
 
 def clean_text(text):
     """
@@ -28,20 +36,20 @@ def clean_text(text):
     text = text.lower()
     return text
 
-# remove stop words
-nltk.download('stopwords')
-my_stopwords = set(stopwords.words('english'))
+
 
 def stopword_text(text):
     """
     """
+
     return " ".join([word for word in text.split() if word not in my_stopwords])
+
+
 
 def lem_text(text):
     """
     """
-    nltk.download('wordnet')
-    lemmatizer = WordNetLemmatizer()
+
     lem_sentence = text.split()
     for i, word in enumerate(text.split()):
         for pos in "n", "v", "a", "r":
