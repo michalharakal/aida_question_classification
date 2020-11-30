@@ -2,11 +2,11 @@ import re
 import nltk
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
-nltk.download('wordnet')
+
 
 def clean_text(text):
     """
-    Regex cleaning of the text. Filters everthing except alphanumerical and '.
+    Regex cleaning of the text. Filters everything except alphanumerical and '.
     Return is turned into lower case
 
     Parameters
@@ -40,6 +40,8 @@ def stopword_text(text):
 def lem_text(text):
     """
     """
+    nltk.download('wordnet')
+    lemmatizer = WordNetLemmatizer()
     lem_sentence = text.split()
     for i, word in enumerate(text.split()):
         for pos in "n", "v", "a", "r":
