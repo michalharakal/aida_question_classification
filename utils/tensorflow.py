@@ -6,7 +6,7 @@ import tensorflow as tf
 
 def tensorflow_info_version():
     """
-    Print version of required scientific libraries and c
+    Print version of Tensorflow and Keras
     """
 
     print(f"Tensor Flow Version: {tf.__version__}")
