@@ -161,7 +161,7 @@ top_subcategories = list((train_df.subcategory.value_counts().nlargest(n)).index
 top_subcategories
 
 train_df_top = train_df.loc[train_df['subcategory'].isin(top_subcategories)]
-len(train_df_top)
+print(len(train_df_top))
 
 # In[16]: 
 
@@ -216,13 +216,14 @@ and {al_test} tokens in the test data set.')
 
 train_question_df = train_df['question'].str.split(" ", expand=True)
 train_question_df 
-    
-# In[22]:  
-    
-#percentage distribution of tokens (train)
+
+# In[2e]:
+
+#percentage distribution of tokens (test)
 for column in train_question_df.columns:
     nan_sum = train_question_df[column].isnull().sum()
-    print(column,': ',round(100.00-(nan_sum*100/len(train_question_df)),2))   
+    print(column,': ',round(100.00-(nan_sum*100/len(train_question_df)),2)) 
+    
 
 # In[23]:
 
@@ -232,11 +233,39 @@ test_question_df
 
 # In[24]:
 
-
 #percentage distribution of tokens (test)
 for column in test_question_df.columns:
     nan_sum = test_question_df[column].isnull().sum()
     print(column,': ',round(100.00-(nan_sum*100/len(test_question_df)),2)) 
+    
+    
+    
+# In[24]:
+
+#percentage distribution of tokens (test)
+for column in test_question_df.columns:
+    nan_sum = test_question_df[column].isnull().sum()
+    print(column,': ',round(100.00-(nan_sum*100/len(test_question_df)),2))   
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 
 
 if __name__ == '__main__' :
