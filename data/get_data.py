@@ -1,5 +1,3 @@
-
-import re
 import pathlib
 import pandas as pd
 import os
@@ -30,7 +28,6 @@ def check_local_data():
     if local_data_missing('train_5500.label.txt') or local_data_missing('train_5500.label.txt'):
         download_file("https://cogcomp.seas.upenn.edu/Data/QA/QC/train_5500.label", "./")
         download_file("https://cogcomp.seas.upenn.edu/Data/QA/QC/TREC_10.label", "./")
-
 
 
 def process_question(row):
