@@ -84,15 +84,18 @@ def create_sequences(preprocessed_train, preprocessed_test):
 
 
 def encode_classes(train_df, test_df, category_col="category"):
+
     y_train = train_df.copy()
     train_categories = train_df[category_col].unique()
-    y_train[category_col] = y_train[category_col].astype(CategoricalDtype(categories=train_categories, ordered=True))
+    cat_type = CategoricalDtype(categories=train_categories, ordered=True)
+    y_train[category_col + "_coded"] = y_train[category_col].astype(cat_type).cat.codes
 
     y_test = test_df.copy()
     test_categories = y_test[category_col].unique()
-    y_test[category_col] = y_test[category_col].astype(CategoricalDtype(categories=test_categories, ordered=True))
+    cat_type = CategoricalDtype(categories=test_categories, ordered=True)
+    y_test[category_col + "_coded"] = y_test[category_col].astype(cat_type).cat.codes
 
-    return y_train, y_test
+    return y_train[category_col + "_coded"], y_test[category_col + "_coded"]
 
 
 def preprocess_data(train_df, test_df):
