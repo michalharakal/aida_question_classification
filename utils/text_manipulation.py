@@ -20,7 +20,7 @@ def clean_text(text):
     Parameters
     ----------
     text : string
-        Pixel size of the height of a "noise image"
+        text to be cleaned
 
     Returns
     -------
@@ -82,3 +82,13 @@ def lem_text(text):
             else:
                 lem_sentence[i] = word
     return " ".join(lem_sentence)
+
+
+def main():
+    """
+    Testing some function in file
+    """
+
+
+if __name__ == '__main__':
+    main()
