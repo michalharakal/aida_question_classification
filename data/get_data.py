@@ -41,7 +41,14 @@ def process_pd_input(file_name):
         :param file_name: training file filename
         :return: splited data frame
     """
+
     path = pathlib.Path.cwd().joinpath('data', file_name)
+    if path.exists():
+        path = pathlib.Path.cwd().joinpath('data', file_name)
+    else:
+        path = pathlib.Path.cwd().joinpath(file_name)
+    # print(path)
+
     df = pd.read_table(path, encoding="ISO-8859-1", header=None)
     df.columns = ["raw"]
     df['cat_combined'] = df.apply(lambda row: row["raw"].split(" ")[0], axis=1)
@@ -80,5 +87,14 @@ def get_test_data(test_file='TREC_10.label.txt'):
     return process_pd_input(test_file)
 
 
+def main():
+    """
+    Testing some function in file
+    """
+    df = process_pd_input('TREC_10.label.txt')
+    # print(df['cat_combined'])
+
+
 if __name__ == '__main__':
     check_local_data()
+    # main()
