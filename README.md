@@ -11,7 +11,7 @@ Category classification
   
 - [X] text processing (tokenize, stemming, lemming) @sven
   
-- [ ] Data preprocessing
+- [X] Data preprocessing @Petra
 - [ ] Base Model
 - [ ] SVM @Andreas @Sven
 - [ ] LSTM Model @Michal @Petra
