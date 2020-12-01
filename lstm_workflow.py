@@ -18,7 +18,7 @@ def main():
 
     (X_train, y_train), (X_test, y_test), sequence_length = dp.preprocess_data(train_df, test_df)
 
-    model, history = lstm.build_classifier(500, X_train, y_train, X_test, y_test)
+    model, history = lstm.build_classifier(500, X_train, y_train, X_test, y_test, sequence_length)
     evaluate(model, X_test, y_test)
     render_plot(history)
 

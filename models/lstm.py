@@ -9,6 +9,7 @@ import matplotlib.pyplot as plt
 
 numpy.random.seed(7)
 
+
 def build_classifier(top_words, X_train, y_train, X_test, y_test, max_review_length):
     # create the model
     embedding_vecor_length = 32

@@ -1,9 +1,12 @@
+from pandas import CategoricalDtype
+
 import utils.text_manipulation as text
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 import pandas as pd
 from keras.preprocessing import sequence
 
 from keras.preprocessing.text import Tokenizer
+from keras.utils import to_categorical
 
 
 def preprocess_text(df_train_raw, df_test_raw):
@@ -48,10 +51,20 @@ def vectorize_words_tfid(df_train, df_test):
     return df_tfidf_vectorizer.shape
 
 
-def tokenize(df_train, column="question"):
+def tokenize(df_text, column="question"):
     tokenizer = Tokenizer()
-    tokenizer.fit_on_texts(df_train[column])
-    return tokenizer.texts_to_sequences(df_train[column])
+    tokenizer.fit_on_texts(df_text[column])
+    sequences = tokenizer.texts_to_sequences(df_text[column])
+    print('\nSequences is of type:      ', type(sequences))
+    print('\nFirst sequence is of type: ', type(sequences[0]))
+    print('\nFirst sequence looks like this: ')
+    print(sequences[0])
+
+    # vocabulary size
+    vocab_size = len(tokenizer.word_index) + 1
+
+    print('\nSize of vocabulary: ', vocab_size)
+    return sequences
 
 
 def create_pads(tokenized):
@@ -67,11 +80,19 @@ def create_sequences(preprocessed_train, preprocessed_test):
     tokenized_test = tokenize(preprocessed_test)
     sequenced_test = create_pads(tokenized_test)
 
-    return sequenced_train[0], sequenced_test[0], sequenced_train[1]
+    return sequenced_train, sequenced_test, sequenced_train.shape[1]
 
 
-def encode_classes(train_df, test_df):
-    return train_df, test_df
+def encode_classes(train_df, test_df, category_col="category"):
+    y_train = train_df.copy()
+    train_categories = train_df[category_col].unique()
+    y_train[category_col] = y_train[category_col].astype(CategoricalDtype(categories=train_categories, ordered=True))
+
+    y_test = test_df.copy()
+    test_categories = y_test[category_col].unique()
+    y_test[category_col] = y_test[category_col].astype(CategoricalDtype(categories=test_categories, ordered=True))
+
+    return y_train, y_test
 
 
 def preprocess_data(train_df, test_df):
