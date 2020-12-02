@@ -28,9 +28,14 @@ def preprocess_text(df_train_raw, df_test_raw):
     return df_train, df_test
 
 
-def tokenize(df_text, column="Question"):
+def common_tokenizer(df_train, df_test):
+    data = pd.concat([df_train, df_test])
     tokenizer = Tokenizer()
-    tokenizer.fit_on_texts(df_text[column].values)
+    tokenizer.fit_on_texts(data['Question'].values)
+    return tokenizer
+
+
+def tokenize(tokenizer, df_text, column="Question"):
     sequences = tokenizer.texts_to_sequences(df_text[column].values)
     iterator = iter(tokenizer.word_index.items())
     for i in range(10):
@@ -44,12 +49,13 @@ def tokenize(df_text, column="Question"):
 
 
 def create_sequences(preprocessed_train, preprocessed_test):
+    tokenizer = common_tokenizer(preprocessed_train, preprocessed_test)
     # train
-    tokenized_train, vocab_size_train = tokenize(preprocessed_train)
+    tokenized_train, vocab_size_train = tokenize(tokenizer, preprocessed_train)
     train_X = sequence.pad_sequences(tokenized_train, value=0.)
     max_len_train = max(set([len(x) for x in tokenized_train]))
     # test
-    tokenized_test, vocab_size_test = tokenize(preprocessed_test)
+    tokenized_test, vocab_size_test = tokenize(tokenizer, preprocessed_test)
     max_len_test = max(set([len(x) for x in tokenized_test]))
 
     # take the same value for padding (max length)
@@ -72,4 +78,3 @@ def preprocess_data(train_df, test_df):
         create_sequences(train_df, test_df)
     encoded_train, encoded_test = encode_classes(train_df, test_df)
     return (sequenced_train, encoded_train), (sequenced_test, encoded_test), sequence_length, vocab_size_train
-
