@@ -64,23 +64,27 @@ def tokenize(df_text, column="question"):
     vocab_size = len(tokenizer.word_index) + 1
 
     print('\nSize of vocabulary: ', vocab_size)
-    return sequences
+    return sequences, vocab_size
 
 
-def create_pads(tokenized):
-    return sequence.pad_sequences(tokenized, padding='post', truncating="post")
+def create_pads(tokenized, max_len):
+    return sequence.pad_sequences(tokenized, maxlen= max_len, padding='post', truncating="post")
 
 
 def create_sequences(preprocessed_train, preprocessed_test):
     # train
-    tokenized_train = tokenize(preprocessed_train)
-    sequenced_train = create_pads(tokenized_train)
-
+    tokenized_train, vocab_size_train = tokenize(preprocessed_train)
+    max_len_train = max(set([len(x) for x in tokenized_train]))
     # test
-    tokenized_test = tokenize(preprocessed_test)
-    sequenced_test = create_pads(tokenized_test)
+    tokenized_test, vocab_size_test = tokenize(preprocessed_test)
+    max_len_test = max(set([len(x) for x in tokenized_test]))
 
-    return sequenced_train, sequenced_test, sequenced_train.shape[1]
+    # take the same value for padding (max length)
+    max_len = max(max_len_train, max_len_test)
+    sequenced_train = create_pads(tokenized_train, max_len)
+    sequenced_test = create_pads(tokenized_test, max_len)
+
+    return sequenced_train, sequenced_test, sequenced_train.shape[1], vocab_size_train
 
 
 def encode_classes(train_df, test_df, category_col="category"):
@@ -100,9 +104,10 @@ def encode_classes(train_df, test_df, category_col="category"):
 
 def preprocess_data(train_df, test_df):
     preprocessed_train, preprocessed_test = preprocess_text(train_df, test_df)
-    sequenced_train, sequenced_test, sequence_length = create_sequences(preprocessed_train, preprocessed_test)
+    sequenced_train, sequenced_test, sequence_length, vocab_size_train = \
+        create_sequences(preprocessed_train, preprocessed_test)
     encoded_train, encoded_test = encode_classes(train_df, test_df)
-    return (sequenced_train, encoded_train), (sequenced_test, encoded_test), sequence_length
+    return (sequenced_train, encoded_train), (sequenced_test, encoded_test), sequence_length, vocab_size_train
 
 
 def train_test_split(train_df, test_df):

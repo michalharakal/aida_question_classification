@@ -10,17 +10,19 @@ import matplotlib.pyplot as plt
 numpy.random.seed(7)
 
 
-def build_classifier(top_words, X_train, y_train, X_test, y_test, max_review_length):
+def build_classifier(vocab_size, seq_length, LSTM_SIZE, DENSE_SIZE):
     # create the model
-    embedding_vecor_length = 32
     model = Sequential()
-    model.add(Embedding(top_words, embedding_vecor_length, input_length=max_review_length))
-    model.add(LSTM(100))
-    model.add(Dense(1, activation='sigmoid'))
-    model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+    model.add(Embedding(vocab_size, seq_length, input_length=seq_length, name="Embedding"))
+    model.add(LSTM(LSTM_SIZE, return_sequences=True, name="LSTM1"))
+    model.add(LSTM(LSTM_SIZE, name="LSTM2"))
+    model.add(Dense(DENSE_SIZE, activation='relu', name="DenseRelu"))
+    model.add(Dense(vocab_size, activation='softmax', name="DenseSoftmax"))
+    model.compile(loss='categorical_crossentropy', \
+                  optimizer='adam', \
+                  metrics=['accuracy'])
     print(model.summary())
-    history = model.fit(X_train, y_train, validation_data=(X_test, y_test), epochs=3, batch_size=64)
-    return model, history
+    return model
 
 
 def evaluate(model, X_test, y_test):
