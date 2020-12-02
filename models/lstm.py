@@ -16,8 +16,8 @@ def build_classifier(vocab_size, seq_length, LSTM_SIZE, DENSE_SIZE):
     model.add(Embedding(vocab_size, seq_length, input_length=seq_length, name="Embedding"))
     model.add(LSTM(LSTM_SIZE, return_sequences=True, name="LSTM1"))
     model.add(LSTM(LSTM_SIZE, name="LSTM2"))
-    model.add(Dense(DENSE_SIZE, activation='relu', name="DenseRelu"))
-    model.add(Dense(vocab_size, activation='softmax', name="DenseSoftmax"))
+    model.add(Dense(DENSE_SIZE,  activation='relu', name="DenseRelu"))
+    model.add(Dense(1, activation='softmax', name="DenseSoftmax"))
     model.compile(loss='categorical_crossentropy', \
                   optimizer='adam', \
                   metrics=['accuracy'])
