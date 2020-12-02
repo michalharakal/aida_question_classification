@@ -1,16 +1,22 @@
 import numpy
-from keras.models import Sequential
-from keras.layers import Dense, Dropout
-from keras.layers import LSTM
-from keras.layers.embeddings import Embedding
-import matplotlib.pyplot as plt
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense
+from tensorflow.keras.layers import Dropout
+from tensorflow.keras.layers import LSTM
+from tensorflow.keras.layers import Embedding
+from tensorflow.keras.callbacks import TensorBoard
+import datetime
 
-# based on https://machinelearningmastery.com/sequence-classification-lstm-recurrent-neural-networks-python-keras/
+# Model parameters
+LSTM_SIZE = 100
+DENSE_SIZE = 100
+batch_size = 128
+epochs = 20
 
 numpy.random.seed(7)
 
 
-def build_classifier_simple(vocab_size, LSTM_SIZE, DENSE_SIZE, seq_length, categories_count):
+def build_classifier_simple(vocab_size, seq_length, categories_count):
     # create the model
     model = Sequential()
     model.add(Embedding(vocab_size, seq_length, input_length=seq_length, name="Embedding"))
@@ -22,7 +28,7 @@ def build_classifier_simple(vocab_size, LSTM_SIZE, DENSE_SIZE, seq_length, categ
     return model
 
 
-def build_classifier(vocab_size, LSTM_SIZE, DENSE_SIZE, seq_length, categories_count):
+def build_classifier(vocab_size, seq_length, categories_count):
     # create the model
     model = Sequential()
     model.add(Embedding(vocab_size, seq_length, input_length=seq_length, name="Embedding"))
@@ -44,17 +50,9 @@ def evaluate(model, X_test, y_test):
     return scores
 
 
-def render_plot(history):
-    plt.figure(figsize=(15, 5))
-    plt.plot(history.history['accuracy'], label='Train accuracy')
-    plt.plot(history.history['val_accuracy'], label='Test accuracy')
-
-    plt.xticks(range(3))
-    plt.title("Model", fontsize=14)
-    plt.legend()
-    plt.show()
-    plt.savefig('lstm_history.png')
-
-
-def archive_results(score):
-    pass
+def train(model, X_train, Y_train):
+    # Ativando o Tensorboard para poder monitorar com o comando abaixo em uym outro terminal:
+    # > tensorboard --logdir=logskeras/
+    tensorboard = TensorBoard(log_dir='logskeras/{}'.format(datetime.datetime.today().strftime('%Y%m%d_%H%M')))
+    history = model.fit(X_train, Y_train, batch_size=batch_size, epochs=epochs, callbacks=[tensorboard])
+    return history
