@@ -36,7 +36,7 @@ def preprocess(df_train, df_test):
     return df_train, df_test
 
 
-def evaluate_pipeline(pipeline, X_test, y_test):
+def pipeline_results(pipeline, X_test, y_test):
     """
     print pipeline results for given pipeline and X, y values
 
@@ -55,16 +55,6 @@ def evaluate_pipeline(pipeline, X_test, y_test):
 
     val_confusion_matrix = confusion_matrix(y_test, y_pred_pipeline)
     print(f'Confusion Matrix: \n{val_confusion_matrix}')
-
-
-def evaluate():
-    """
-
-    Returns
-    -------
-
-    """
-    pass
 
 
 def main():
@@ -90,32 +80,7 @@ def main():
     # X_test = df_test.text
     # y_test = df_test['subcategory']  # using main category
 
-    # create CountVectorizer to validate in df the use of it.
-    # later not used directly only applied in Pipeline
-    # ngram_range=(1, 2),
-    count_vectorizer = CountVectorizer(stop_words=[], ngram_range=(1, 3))
-    bag_of_words = count_vectorizer.fit_transform(X_train)
-
-    # Show the Bag-of-Words Model as a pandas DataFrame
-    feature_names = count_vectorizer.get_feature_names()
-    df_bag_of_words = pd.DataFrame(bag_of_words.toarray(), columns=feature_names)
-
-    # print(type(bag_of_words))
-    print('bag_of_words shape', bag_of_words.shape)
-
-    # create vectorizer out of words of questions
-    # later not used directly only applied in Pipeline
-    tfidf_vectorizer = TfidfVectorizer()
-    tfidf_matrix = tfidf_vectorizer.fit_transform(X_train)
-
-    # Show the Model as a pandas DataFrame
-    feature_names = tfidf_vectorizer.get_feature_names()
-    df_tfidf_vectorizer = pd.DataFrame(tfidf_matrix.toarray(), columns=feature_names)
-
-    # print(type(tfidf_matrix))
-    print(tfidf_matrix.shape)
-
-
+    ##############################
     # prediction
 
     pipe_tf = Pipeline(steps=[
@@ -153,19 +118,19 @@ def main():
 
     pipe_tf.fit(X_train, y_train)
     print('results TfidfVectorized pipeline fkt:')
-    evaluate_pipeline(pipe_tf, X_test, y_test)
+    pipeline_results(pipe_tf, X_test, y_test)
 
     pipe_cv.fit(X_train, y_train)
     print('results CountVectorized pipeline fkt:')
-    evaluate_pipeline(pipe_cv, X_test, y_test)
+    pipeline_results(pipe_cv, X_test, y_test)
 
     pipe_cv_ng12.fit(X_train, y_train)
     print('results pipe_cv_no_stop_words ngram_range=(1, 2) fkt:')
-    evaluate_pipeline(pipe_cv_ng12, X_test, y_test)
+    pipeline_results(pipe_cv_ng12, X_test, y_test)
 
     pipe_cv_ng13.fit(X_train, y_train)
     print('results pipe_cv_no_stop_words ngram_range=(1, 3) fkt:')
-    evaluate_pipeline(pipe_cv_ng13, X_test, y_test)
+    pipeline_results(pipe_cv_ng13, X_test, y_test)
 
 if __name__ == '__main__':
     main()
