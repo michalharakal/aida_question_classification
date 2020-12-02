@@ -1,6 +1,6 @@
 import numpy
 from keras.models import Sequential
-from keras.layers import Dense
+from keras.layers import Dense, Dropout
 from keras.layers import LSTM
 from keras.layers.embeddings import Embedding
 import matplotlib.pyplot as plt
@@ -10,14 +10,26 @@ import matplotlib.pyplot as plt
 numpy.random.seed(7)
 
 
-def build_classifier(vocab_size, seq_length, LSTM_SIZE, DENSE_SIZE):
+def build_classifier_simple(vocab_size, LSTM_SIZE, DENSE_SIZE, seq_length, categories_count):
+    # create the model
+    model = Sequential()
+    model.add(Embedding(vocab_size, seq_length, input_length=seq_length, name="Embedding"))
+    model.add(LSTM(units=128))
+    model.add(Dropout(0.5))
+    model.add(Dense(categories_count, activation='softmax'))
+    model.compile(loss='categorical_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
+    print(model.summary())
+    return model
+
+
+def build_classifier(vocab_size, LSTM_SIZE, DENSE_SIZE, seq_length, categories_count):
     # create the model
     model = Sequential()
     model.add(Embedding(vocab_size, seq_length, input_length=seq_length, name="Embedding"))
     model.add(LSTM(LSTM_SIZE, return_sequences=True, name="LSTM1"))
     model.add(LSTM(LSTM_SIZE, name="LSTM2"))
-    model.add(Dense(DENSE_SIZE,  activation='relu', name="DenseRelu"))
-    model.add(Dense(1, activation='softmax', name="DenseSoftmax"))
+    model.add(Dense(DENSE_SIZE, activation='relu', name="Denserelu"))
+    model.add(Dense(categories_count, activation='softmax', name="DenseSoftmax"))
     model.compile(loss='categorical_crossentropy', \
                   optimizer='adam', \
                   metrics=['accuracy'])
