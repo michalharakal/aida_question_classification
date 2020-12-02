@@ -22,8 +22,5 @@ def gpu_is_available():
     return tf.test.is_gpu_available()
 
 
-
-
 if __name__ == '__main__':
     gpu_is_available()
-
