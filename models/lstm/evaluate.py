@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 def evaluate(model, X_test, y_test):
     loss, acc = model.evaluate(X_test, y_test, verbose=2)
-    print("Acurácia: %.2f" % (acc))
+    print("Accuracy: %.2f" % (acc))
 
     """
         print pipeline results for given pipeline and X, y values
