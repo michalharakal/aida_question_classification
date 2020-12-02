@@ -76,9 +76,12 @@ def main():
     df_train, df_test = preprocess(df_train, df_test)
 
     # defining main test and train data of main categories
-    X_train = df_train.text
+    # X_train = df_train['text'] # question - data regex, stopwords, lem
+    X_train = df_train['question'] # question - data not cleaned
     y_train = df_train['category']  # using main category
-    X_test = df_test.text
+
+    # X_test = df_test['text']  # question - data not cleaned
+    X_test = df_test['question'] # question - data not cleaned
     y_test = df_test['category']  # using main category
 
     # Test - defining main test and train data of main sub categories
@@ -88,20 +91,20 @@ def main():
     # y_test = df_test['subcategory']  # using main category
 
     # create CountVectorizer to validate in df the use of it.
-    # later not used directy only applied in Pipeline
-
-    count_vectorizer = CountVectorizer()
+    # later not used directly only applied in Pipeline
+    # ngram_range=(1, 2),
+    count_vectorizer = CountVectorizer(stop_words=[], ngram_range=(1, 3))
     bag_of_words = count_vectorizer.fit_transform(X_train)
 
     # Show the Bag-of-Words Model as a pandas DataFrame
-    # later not used directy only applied in Pipeline
     feature_names = count_vectorizer.get_feature_names()
     df_bag_of_words = pd.DataFrame(bag_of_words.toarray(), columns=feature_names)
 
     # print(type(bag_of_words))
-    print(bag_of_words.shape)
+    print('bag_of_words shape', bag_of_words.shape)
 
     # create vectorizer out of words of questions
+    # later not used directly only applied in Pipeline
     tfidf_vectorizer = TfidfVectorizer()
     tfidf_matrix = tfidf_vectorizer.fit_transform(X_train)
 
@@ -111,6 +114,7 @@ def main():
 
     # print(type(tfidf_matrix))
     print(tfidf_matrix.shape)
+
 
     # prediction
 
@@ -122,11 +126,26 @@ def main():
     print('cross_val_score, TfidfVectorized :', cross_val_score(pipe_tf, X_train, y_train).mean())
 
     pipe_cv = Pipeline(steps=[
-        ('data_cv', CountVectorizer()),
+        ('data_cv', CountVectorizer(stop_words=[])),
         # ('model', LogisticRegressionCV())
         ('model', svm.LinearSVC())
     ])
-    print('cross_val_score, CountVectorized :', cross_val_score(pipe_cv, X_train, y_train).mean())
+    print('cross_val_score, CountVectorized  pipe_cv_no_stop_words:', cross_val_score(pipe_cv, X_train, y_train).mean())
+
+    pipe_cv_ng12 = Pipeline(steps=[
+        ('data_cv', CountVectorizer(stop_words=[], ngram_range=(1, 2))),
+        # ('model', LogisticRegressionCV())
+        ('model', svm.LinearSVC())
+    ])
+    print('cross_val_score, pipe_cv_no_stop_words ngram_range=(1, 2) :', cross_val_score(pipe_cv_ng12, X_train, y_train).mean())
+
+    pipe_cv_ng13 = Pipeline(steps=[
+        ('data_cv', CountVectorizer(stop_words=[], ngram_range=(1, 3))),
+        # ('model', LogisticRegressionCV())
+        ('model', svm.LinearSVC())
+    ])
+    print('cross_val_score, pipe_cv_no_stop_words ngram_range=(1, 3) :',
+          cross_val_score(pipe_cv_ng13, X_train, y_train).mean())
 
     ##############################
     # Measuring the performance
@@ -140,6 +159,13 @@ def main():
     print('results CountVectorized pipeline fkt:')
     evaluate_pipeline(pipe_cv, X_test, y_test)
 
+    pipe_cv_ng12.fit(X_train, y_train)
+    print('results pipe_cv_no_stop_words ngram_range=(1, 2) fkt:')
+    evaluate_pipeline(pipe_cv_ng12, X_test, y_test)
+
+    pipe_cv_ng13.fit(X_train, y_train)
+    print('results pipe_cv_no_stop_words ngram_range=(1, 3) fkt:')
+    evaluate_pipeline(pipe_cv_ng13, X_test, y_test)
 
 if __name__ == '__main__':
     main()
