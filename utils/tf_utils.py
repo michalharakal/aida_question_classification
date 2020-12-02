@@ -10,7 +10,7 @@ def tensorflow_info_version():
     """
 
     print(f"Tensor Flow Version: {tf.__version__}")
-    print(f"Keras Version: {tf_utils.keras.__version__}")
+    print(f"Keras Version: {tensorflow.keras.__version__}")
     print()
     print(f"Python {sys.version}")
 
