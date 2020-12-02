@@ -10,7 +10,7 @@ def tensorflow_info_version():
     """
 
     print(f"Tensor Flow Version: {tf.__version__}")
-    print(f"Keras Version: {tensorflow.keras.__version__}")
+    print(f"Keras Version: {tf_utils.keras.__version__}")
     print()
     print(f"Python {sys.version}")
 
@@ -20,3 +20,10 @@ def gpu_is_available():
     Returns True if Tensorflow is installed and uses GPU
     """
     return tf.test.is_gpu_available()
+
+
+
+
+if __name__ == '__main__':
+    gpu_is_available()
+
