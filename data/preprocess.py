@@ -28,37 +28,13 @@ def preprocess_text(df_train_raw, df_test_raw):
     return df_train, df_test
 
 
-def vectorize_words(df_train, df_test):
-    count_vectorizer = CountVectorizer()
-    bag_of_words = count_vectorizer.fit_transform(df_train)
-
-    # Show the Bag-of-Words Model as a pandas DataFrame
-    feature_names = count_vectorizer.get_feature_names()
-    df_bag_of_words = pd.DataFrame(bag_of_words.toarray(), columns=feature_names)
-    return df_bag_of_words
-
-
-def vectorize_words_tfid(df_train, df_test):
-    # create vectorizer out of words of questions
-    tfidf_vectorizer = TfidfVectorizer()
-    tfidf_matrix = tfidf_vectorizer.fit_transform(df_train)
-
-    # Show the Model as a pandas DataFrame
-    feature_names = tfidf_vectorizer.get_feature_names()
-    df_tfidf_vectorizer = pd.DataFrame(tfidf_matrix.toarray(), columns=feature_names)
-
-    # print(type(tfidf_matrix))
-    return df_tfidf_vectorizer.shape
-
-
-def tokenize(df_text, column="question"):
+def tokenize(df_text, column="Question"):
     tokenizer = Tokenizer()
-    tokenizer.fit_on_texts(df_text[column])
-    sequences = tokenizer.texts_to_sequences(df_text[column])
-    print('\nSequences is of type:      ', type(sequences))
-    print('\nFirst sequence is of type: ', type(sequences[0]))
-    print('\nFirst sequence looks like this: ')
-    print(sequences[0])
+    tokenizer.fit_on_texts(df_text[column].values)
+    sequences = tokenizer.texts_to_sequences(df_text[column].values)
+    iterator = iter(tokenizer.word_index.items())
+    for i in range(10):
+        print(next(iterator))
 
     # vocabulary size
     vocab_size = len(tokenizer.word_index) + 1
@@ -67,13 +43,10 @@ def tokenize(df_text, column="question"):
     return sequences, vocab_size
 
 
-def create_pads(tokenized, max_len):
-    return sequence.pad_sequences(tokenized, maxlen= max_len, padding='post', truncating="post")
-
-
 def create_sequences(preprocessed_train, preprocessed_test):
     # train
     tokenized_train, vocab_size_train = tokenize(preprocessed_train)
+    train_X = sequence.pad_sequences(tokenized_train, value=0.)
     max_len_train = max(set([len(x) for x in tokenized_train]))
     # test
     tokenized_test, vocab_size_test = tokenize(preprocessed_test)
@@ -81,41 +54,22 @@ def create_sequences(preprocessed_train, preprocessed_test):
 
     # take the same value for padding (max length)
     max_len = max(max_len_train, max_len_test)
-    sequenced_train = create_pads(tokenized_train, max_len)
-    sequenced_test = create_pads(tokenized_test, max_len)
+    test_X = sequence.pad_sequences(tokenized_test, maxlen=train_X.shape[1], value=0.)
 
-    return sequenced_train, sequenced_test, sequenced_train.shape[1], vocab_size_train
+    return train_X, test_X, train_X.shape[1], vocab_size_train
 
 
-def encode_classes(train_df, test_df, category_col="category"):
-    y_train = pd.get_dummies(train_df[category_col]).values
-    y_test = pd.get_dummies(test_df[category_col]).values
+def encode_classes(train_df, test_df, category_col="Category"):
+    y_train = pd.get_dummies(train_df[category_col])
+    y_test = pd.get_dummies(test_df[category_col])
 
-    return y_train, y_test
+    return y_train.values, y_test.values
 
 
 def preprocess_data(train_df, test_df):
-    preprocessed_train, preprocessed_test = preprocess_text(train_df, test_df)
+    # preprocessed_train, preprocessed_test = preprocess_text(train_df, test_df)
     sequenced_train, sequenced_test, sequence_length, vocab_size_train = \
-        create_sequences(preprocessed_train, preprocessed_test)
+        create_sequences(train_df, test_df)
     encoded_train, encoded_test = encode_classes(train_df, test_df)
     return (sequenced_train, encoded_train), (sequenced_test, encoded_test), sequence_length, vocab_size_train
 
-
-def train_test_split(train_df, test_df):
-    """
-    Make train test split
-
-    Returns
-    -------
-    (X_train, y_train), (X_test, y_test):
-        pandas.Serie with splitred test and train data
-
-    """
-    X_train = train_df["text"]
-    X_test = test_df["category"]
-
-    y_train = train_df["text"]
-    y_test = train_df["category"]
-
-    return (X_train, y_train), (X_test, y_test)

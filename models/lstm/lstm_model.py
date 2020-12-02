@@ -1,10 +1,11 @@
 import numpy
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense
-from tensorflow.keras.layers import Dropout
-from tensorflow.keras.layers import LSTM
-from tensorflow.keras.layers import Embedding
-from tensorflow.keras.callbacks import TensorBoard
+from keras.models import Sequential
+from keras.layers import Dense
+from keras.layers import Dropout
+from keras.layers import LSTM
+from keras.layers import Embedding
+from keras.callbacks import TensorBoard
+from keras.backend import clear_session
 import datetime
 
 # Model parameters
@@ -16,19 +17,37 @@ epochs = 20
 numpy.random.seed(7)
 
 
-def build_classifier_simple(vocab_size, seq_length, categories_count):
-    # create the model
+def build_classifier(vocab_size, seq_length, categories_count):
+    clear_session()
+
     model = Sequential()
-    model.add(Embedding(vocab_size, seq_length, input_length=seq_length, name="Embedding"))
+    model.add(Embedding(input_dim=vocab_size, output_dim=256, input_length=seq_length))
     model.add(LSTM(units=128))
     model.add(Dropout(0.5))
     model.add(Dense(categories_count, activation='softmax'))
+
     model.compile(loss='categorical_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
     print(model.summary())
     return model
 
 
-def build_classifier(vocab_size, seq_length, categories_count):
+def build_classifier_lstm(vocab_size, seq_length, categories_count):
+    clear_session()
+
+    model = Sequential()
+    model.add(Embedding(input_dim=vocab_size, output_dim=256, input_length=seq_length))
+    model.add(LSTM(128, return_sequences=True))
+    model.add(LSTM(128, return_sequences=True))
+    model.add(LSTM(128))
+    model.add(Dense(6, activation='softmax'))
+
+    model.compile(loss='categorical_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
+    print(model.summary())
+    return model
+
+
+def build_classifier_xx(vocab_size, seq_length, categories_count):
+    clear_session()
     # create the model
     model = Sequential()
     model.add(Embedding(vocab_size, seq_length, input_length=seq_length, name="Embedding"))
@@ -51,8 +70,8 @@ def evaluate(model, X_test, y_test):
 
 
 def train(model, X_train, Y_train):
-    # Ativando o Tensorboard para poder monitorar com o comando abaixo em uym outro terminal:
-    # > tensorboard --logdir=logskeras/
     tensorboard = TensorBoard(log_dir='logskeras/{}'.format(datetime.datetime.today().strftime('%Y%m%d_%H%M')))
-    history = model.fit(X_train, Y_train, batch_size=batch_size, epochs=epochs, callbacks=[tensorboard])
+
+    history = model.fit(X_train, Y_train, batch_size=32, epochs=5, verbose=1, validation_split=0.1,
+                        callbacks=[tensorboard])
     return history
