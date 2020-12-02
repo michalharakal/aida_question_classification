@@ -1,5 +1,8 @@
 import pandas as pd
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
+import data.get_data as data
+
+
 
 def ng_CountVectorizer(X_train, ngram_range):
 
@@ -37,10 +40,10 @@ def main():
     """
     Testing some function in file
     """
-    df = process_pd_input('TREC_10.label.txt')
-    # print(df['cat_combined'])
+    # loading data and working with pd df
+    df_train = data.get_train_data()
+    df_test = data.get_test_data()
 
 
 if __name__ == '__main__':
-    check_local_data()
-    # main()
+    main()
