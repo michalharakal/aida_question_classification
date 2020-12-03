@@ -35,6 +35,14 @@ def preprocess(df_train, df_test):
 
     return df_train, df_test
 
+def preprocess_stpw_clean_lem(df_train, df_test):
+
+    df_train = txtm.preprocess_dataframe(df_train)
+    df_test = txtm.preprocess_dataframe(df_test)
+
+    return df_train, df_test
+
+
 
 def pipeline_results(pipeline, X_test, y_test):
     """
@@ -65,19 +73,24 @@ def main():
     # preprocess questions regex clean, stopwords, lemmatizer
     df_train, df_test = preprocess(df_train, df_test)
 
-    # defining main test and train data of main categories
-    # X_train = df_train['text'] # question - data regex, stopwords, lem
-    X_train = df_train['question'] # question - data not cleaned
-    y_train = df_train['category']  # using main category
+    df_train, df_test = preprocess_stpw_clean_lem(df_train, df_test)
 
-    # X_test = df_test['text']  # question - data not cleaned
-    X_test = df_test['question'] # question - data not cleaned
+    # defining main test and train data of main categories
+    X_train = df_train['text_lemma'] # question - data regex, stopwords, lem
+    y_train = df_train['category']  # using main category
+    X_test = df_test['text_lemma'] # question - data not cleaned
     y_test = df_test['category']  # using main category
 
     # Test - defining main test and train data of main sub categories
-    # X_train = df_train.text
+    X_train = df_train.question
+    y_train = df_train['category']  # using main category
+    X_test = df_test.question
+    y_test = df_test['category']  # using main category
+
+    # Test - defining main test and train data of main sub categories
+    # X_train = df_train.question
     # y_train = df_train['subcategory']  # using main category
-    # X_test = df_test.text
+    # X_test = df_test.question
     # y_test = df_test['subcategory']  # using main category
 
     ##############################

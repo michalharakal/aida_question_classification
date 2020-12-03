@@ -30,6 +30,8 @@ def corpus_func(df, column):
 def preprocess_dataframe(df):
     '''
     create new columns in the data frame
+    first stop words, clean and lemma
+
     new_column: 'text' => cleaned stopwords (english)
                 'text_clean' => regex, lowercase
                 'text_lemma' => lemmetized
