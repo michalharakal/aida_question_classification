@@ -1,0 +1,24 @@
+= LSTM model
+
+== Preprocessing
+
+* Vectorize
+* Pad
+
+=== Data
+
+Test and Train data are separated
+
+== Models
+
+=== Simple LSTM model
+
+image::../models/LSTM_DROPOUT.png[alt="LSTM_DROPOUT"]
+
+=== Double LSTM layers model
+
+image::../models/LSTM2_DENSE_2.png[alt="LSTM2_DENSE_2"]
+
+=== Triple LSTM layers model
+
+image::../models/LSTM3.png[alt="LSTM2_DENSE_2"]
