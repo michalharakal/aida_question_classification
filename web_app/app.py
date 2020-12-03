@@ -8,7 +8,7 @@ import classifier as cs
 app = Flask(__name__)
 
 # create classifier instance on start once
-classifier = cs.Classifier()
+classifier = cs.Classifier(basedir="../")
 
 
 @app.route('/')

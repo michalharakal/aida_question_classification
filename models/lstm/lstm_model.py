@@ -21,14 +21,14 @@ epochs = 20
 numpy.random.seed(7)
 
 
-def model_name_2_file_name(model_name):
+def model_name_2_file_name(model_name, basedir="./"):
     """ Return model file name from model name, contain relative path """
-    return os.path.join("./models", model_name + ".h5")
+    return os.path.join(basedir, "models", model_name + ".h5")
 
 
-def model_name_2_plot_name(model_name):
+def model_name_2_plot_name(model_name, basedir="./"):
     """ Return image file name from model name, contain relative path """
-    return os.path.join("./models", model_name + ".png")
+    return os.path.join(basedir, "models", model_name + ".png")
 
 
 def new_model_needed(model_name):
@@ -39,32 +39,32 @@ def new_model_needed(model_name):
     return os.path.isfile(model_name_2_file_name(model_name)) is False
 
 
-def load_local_model(model_name: str):
+def load_local_model(model_name: str, basedir="./"):
     """
     Load model from the file.
     :return: Model. Throws error if file not found
     """
-    file_name = model_name_2_file_name(model_name)
+    file_name = model_name_2_file_name(model_name, basedir)
     return load_model(file_name)
 
 
-def save_model_locally(model):
-    """ Save trained model locally in Teras format"""
-    file_name = model_name_2_file_name(model.name)
+def save_model_locally(model, basedir="./"):
+    """ Save trained model locally in Keras format"""
+    file_name = model_name_2_file_name(model.name, basedir)
     save_model(model, file_name)
 
 
-def save_history_locally(model, history):
+def save_history_locally(model, history, basedir="./"):
     """ Save history. Add timestamp to file name"""
     timestamp = datetime.datetime.today().strftime('%Y%m%d_%H%M')
     filename = f"{model.name}-{timestamp}.pkl"
-    with open(os.path.join("./report", filename), 'wb') as pickle_out:
+    with open(os.path.join(basedir, "report", filename), 'wb') as pickle_out:
         pickle.dump(history.history, pickle_out)
 
 
-def load_latest_local_history(model):
+def load_latest_local_history(model, basedir="./"):
     """ iterate over local folder and return the latest history file for given model"""
-    list_of_files = glob.glob(f"./report/{model.name}*.pkl")  # * means all if need specific format then *.csv
+    list_of_files = glob.glob(f"{basedir}/report/{model.name}*.pkl")  # * means all if need specific format then *.csv
     if list_of_files is None or len(list_of_files) == 0:
         return None
     latest_file_name = max(list_of_files, key=os.path.getctime)

@@ -1,0 +1,13 @@
+= Simple web frontend for Question classifier
+
+Simple *flask* based web app with UI enabling input the question and returns a predicted category.
+
+.Running with *venv*
+
+    $ virtualenv question-classifier
+    $ source question-classifier/bin/activate
+    (question-classifier) $ pip install -r requirements.txt
+    (question-classifier) $ python app.py
+    * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit
+    * Restarting with stat
+    * Debugger is active!

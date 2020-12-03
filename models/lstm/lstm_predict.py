@@ -35,4 +35,4 @@ def predict_lstm(model, tokenizer, train_df, question):
     y_pred_class_index = np.argmax(prediction, axis=1)
     test_categories = pd.get_dummies(train_df["category"]).columns
     predicted_class_label = np.array([test_categories[index] for index in y_pred_class_index])
-    return predicted_class_label
+    return predicted_class_label[0]

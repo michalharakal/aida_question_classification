@@ -18,7 +18,7 @@ def prepare_data(data_column="question", classes_column="category"):
 
 def lstm_dropout_model_unprocessed_data():
     # get and preprocess data
-    (X_train, y_train), (X_test, y_test), sequence_length, vocab_size, tokenizer = prepare_data(data_column="text")
+    (X_train, y_train), (X_test, y_test), sequence_length, vocab_size, tokenizer = prepare_data()
     # build and train model
     model = lstm_model.build_classifier_lstm_dropout(vocab_size, sequence_length, y_train.shape[1])
     history = lstm_model.train(model, X_train, y_train)
