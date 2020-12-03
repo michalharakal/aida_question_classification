@@ -11,6 +11,43 @@ lemmatizer = WordNetLemmatizer()
 nltk.download('stopwords')
 my_stopwords = set(stopwords.words('english'))
 
+def corpus_func(df, column):
+    '''
+    create a textcorpus from pd.series
+
+    Parameters
+    ----------
+    text, string
+
+    Return
+    ------
+    concatinated string with marker ##### as selector
+    '''
+
+    return "######".join(text for text in df[column])
+
+
+def preprocess_dataframe(df):
+    '''
+    create new columns in the data frame
+    new_column: 'text' => cleaned stopwords (english)
+                'text_clean' => regex, lowercase
+                'text_lemma' => lemmetized
+    param: df
+    returns: df with new columns
+    '''
+
+    corpus = corpus_func(df, 'question')
+    text_corpus = stopword_text(corpus)
+    df['text_stopwords'] = text_corpus.split('######')
+
+    clean_corpus = clean_text(text_corpus)
+    df['text_clean'] = clean_corpus.split('######')
+
+    lemma = lem_text(clean_corpus)
+    df['text_lemma'] = lemma.split('######')
+    return df
+
 
 def clean_text(text):
     """
@@ -30,7 +67,7 @@ def clean_text(text):
     """
     text = text.replace("´", "'")
 
-    digi_punct = "[^a-zA-Z.1234567890' ]"
+    digi_punct = "[^a-zA-Z.1234567890'# ]"
     text = re.sub(digi_punct, " ", text)
     text = " ".join(text.split())
     text = text.lower()
