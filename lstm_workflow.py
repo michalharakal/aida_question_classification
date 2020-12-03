@@ -23,7 +23,8 @@ def lstm_dropout_model_unprocessed_data():
     model = lstm_model.build_classifier_lstm_dropout(vocab_size, sequence_length, y_train.shape[1])
     history = lstm_model.train(model, X_train, y_train)
     # evaluate
-    lstm_evaluate.evaluate(model, X_test, y_test)
+    test_df = data.get_test_data()
+    lstm_evaluate.evaluate_lstm(model, X_test, y_test, test_df)
     lstm_evaluate.render_plot(model.name, history)
     test_df = data.get_test_data()
     lstm_predict.print_predictions(model, tokenizer, X_test, test_df)
@@ -32,10 +33,11 @@ def lstm_dropout_model_unprocessed_data():
 def simple_model_simple_lemmas_data():
     (X_train, y_train), (X_test, y_test), sequence_length, vocab_size, tokenizer = prepare_data(data_column="text")
     # build and train model
-    model = lstm_model.build_classifier(vocab_size, sequence_length, y_train.shape[1])
+    model = lstm_model.build_classifier_lstm_dropout(vocab_size, sequence_length, y_train.shape[1])
     history = lstm_model.train(model, X_train, y_train)
     # evaluate
-    lstm_evaluate.evaluate(model, X_test, y_test)
+    test_df = data.get_test_data()
+    lstm_evaluate.evaluate_lstm(model, X_test, y_test, test_df)
     lstm_evaluate.render_plot(model.name, history)
 
 
@@ -45,7 +47,8 @@ def main():
     model = lstm_model.build_classifier_xx(vocab_size, sequence_length, y_train.shape[1])
     history = lstm_model.train(model, X_train, y_train)
     # evaluate
-    lstm_evaluate.evaluate(model, X_test, y_test)
+    test_df = data.get_test_data()
+    lstm_evaluate.evaluate_lstm(model, X_test, y_test, test_df)
     lstm_evaluate.render_plot(history)
 
 

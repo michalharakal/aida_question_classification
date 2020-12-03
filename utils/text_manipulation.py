@@ -49,7 +49,7 @@ def preprocess_dataframe(df):
     return df
 
 
-def clean_text(text, digi_punct):
+def clean_text(text):
     """
     Regex cleaning of the text. Filters everything except alphanumerical and '.
     Return is turned into lower case
@@ -58,9 +58,10 @@ def clean_text(text, digi_punct):
 
     returns: string, lower case regex cleaned text
     """
+    digi_punct = "[^a-zA-Z.1234567890'# ]"  # used by clean_text(text_corpus)
     text = text.replace("´", "'")
     text = re.sub(digi_punct, " ", text)
-    digi_punct = "[^a-zA-Z.1234567890'# ]"  #used by clean_text(text_corpus)
+
     # digi_punct = "[^a-zA-Z.1234567890' ]"
     text = " ".join(text.split())
     text = text.lower()
