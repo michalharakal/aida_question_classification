@@ -1,0 +1,337 @@
+['DESC' 'ENTY' 'ABBR' 'HUM' 'NUM' 'LOC']
+-- DESC ---
+ngram_range= (1, 1)
+-----
+['what', 'the', 'is', 'how', 'of', 'do', 'in', 'to', 'does', 'are']
+what : 762
+the : 603
+is : 487
+how : 287
+of : 247
+do : 213
+in : 130
+to : 130
+does : 129
+are : 106
+-- ENTY ---
+ngram_range= (1, 1)
+-----
+['what', 'the', 'of', 'is', 'in', 'to', 'was', 'name', 'are', 'for']
+what : 1152
+the : 876
+of : 452
+is : 400
+in : 302
+to : 163
+was : 138
+name : 119
+are : 115
+for : 109
+-- ABBR ---
+ngram_range= (1, 1)
+-----
+['what', 'for', 'the', 'does', 'stand', 'is', 'abbreviation', 'of', 'in', 'mean']
+what : 86
+for : 54
+the : 48
+does : 48
+stand : 41
+is : 33
+abbreviation : 16
+of : 15
+in : 10
+mean : 9
+-- HUM ---
+ngram_range= (1, 1)
+-----
+['the', 'who', 'what', 'of', 'in', 'was', 'is', 'to', 'name', 'and']
+the : 1019
+who : 597
+what : 547
+of : 387
+in : 299
+was : 291
+is : 234
+to : 155
+name : 144
+and : 131
+-- NUM ---
+ngram_range= (1, 1)
+-----
+['the', 'how', 'many', 'what', 'of', 'in', 'is', 'when', 'are', 'did']
+the : 560
+how : 492
+many : 323
+what : 276
+of : 246
+in : 245
+is : 223
+when : 136
+are : 136
+did : 121
+-- LOC ---
+ngram_range= (1, 1)
+-----
+['the', 'what', 'is', 'where', 'in', 'of', 'country', 'city', 'can', 'to']
+the : 669
+what : 554
+is : 304
+where : 258
+in : 221
+of : 201
+country : 123
+city : 101
+can : 77
+to : 75
+-- DESC ---
+ngram_range= (1, 2)
+-----
+['what', 'the', 'is', 'what is', 'how', 'of', 'do', 'is the', 'in', 'to']
+what : 762
+the : 603
+is : 487
+what is : 420
+how : 287
+of : 247
+do : 213
+is the : 194
+in : 130
+to : 130
+-- ENTY ---
+ngram_range= (1, 2)
+-----
+['what', 'the', 'of', 'is', 'in', 'what is', 'is the', 'to', 'was', 'name']
+what : 1152
+the : 876
+of : 452
+is : 400
+in : 302
+what is : 253
+is the : 171
+to : 163
+was : 138
+name : 119
+-- ABBR ---
+ngram_range= (1, 2)
+-----
+['what', 'for', 'the', 'does', 'what does', 'stand', 'stand for', 'is', 'what is', 'is the']
+what : 86
+for : 54
+the : 48
+does : 48
+what does : 48
+stand : 41
+stand for : 41
+is : 33
+what is : 30
+is the : 16
+-- HUM ---
+ngram_range= (1, 2)
+-----
+['the', 'who', 'what', 'of', 'in', 'was', 'is', 'of the', 'to', 'name']
+the : 1019
+who : 597
+what : 547
+of : 387
+in : 299
+was : 291
+is : 234
+of the : 156
+to : 155
+name : 144
+-- NUM ---
+ngram_range= (1, 2)
+-----
+['the', 'how', 'many', 'how many', 'what', 'of', 'in', 'is', 'when', 'is the']
+the : 560
+how : 492
+many : 323
+how many : 323
+what : 276
+of : 246
+in : 245
+is : 223
+when : 136
+is the : 136
+-- LOC ---
+ngram_range= (1, 2)
+-----
+['the', 'what', 'is', 'where', 'in', 'of', 'is the', 'country', 'city', 'what is']
+the : 669
+what : 554
+is : 304
+where : 258
+in : 221
+of : 201
+is the : 139
+country : 123
+city : 101
+what is : 95
+-- DESC ---
+ngram_range= (2, 2)
+-----
+['what is', 'is the', 'how do', 'of the', 'what are', 'what does', 'do you', 'the origin', 'origin of', 'how can']
+what is : 420
+is the : 194
+how do : 125
+of the : 85
+what are : 77
+what does : 68
+do you : 64
+the origin : 53
+origin of : 53
+how can : 48
+-- ENTY ---
+ngram_range= (2, 2)
+-----
+['what is', 'is the', 'of the', 'what was', 'in the', 'what are', 'was the', 'what the', 'fear of', 'name of']
+what is : 253
+is the : 171
+of the : 103
+what was : 78
+in the : 75
+what are : 75
+was the : 63
+what the : 62
+fear of : 62
+name of : 62
+-- ABBR ---
+ngram_range= (2, 2)
+-----
+['what does', 'stand for', 'what is', 'is the', 'the abbreviation', 'does the', 'abbreviation for', 'does stand', 'abbreviation of', 'of the']
+what does : 48
+stand for : 41
+what is : 30
+is the : 16
+the abbreviation : 14
+does the : 12
+abbreviation for : 7
+does stand : 5
+abbreviation of : 5
+of the : 5
+-- HUM ---
+ngram_range= (2, 2)
+-----
+['of the', 'who was', 'was the', 'is the', 'who is', 'in the', 'what is', 'the first', 'name of', 'what was']
+of the : 156
+who was : 144
+was the : 124
+is the : 107
+who is : 107
+in the : 99
+what is : 62
+the first : 61
+name of : 55
+what was : 49
+-- NUM ---
+ngram_range= (2, 2)
+-----
+['how many', 'is the', 'what is', 'are there', 'was the', 'in the', 'how much', 'when was', 'how long', 'when did']
+how many : 323
+is the : 136
+what is : 111
+are there : 71
+was the : 67
+in the : 61
+how much : 57
+when was : 53
+how long : 50
+when did : 49
+-- LOC ---
+ngram_range= (2, 2)
+-----
+['is the', 'what is', 'what country', 'where is', 'in the', 'where can', 'of the', 'the world', 'what city', 'can find']
+is the : 139
+what is : 95
+what country : 86
+where is : 77
+in the : 74
+where can : 67
+of the : 62
+the world : 57
+what city : 53
+can find : 44
+-- DESC ---
+ngram_range= (2, 3)
+-----
+['what is', 'is the', 'what is the', 'how do', 'of the', 'what are', 'what does', 'do you', 'how do you', 'the origin']
+what is : 420
+is the : 194
+what is the : 179
+how do : 125
+of the : 85
+what are : 77
+what does : 68
+do you : 64
+how do you : 58
+the origin : 53
+-- ENTY ---
+ngram_range= (2, 3)
+-----
+['what is', 'is the', 'what is the', 'of the', 'what was', 'in the', 'what are', 'was the', 'what the', 'fear of']
+what is : 253
+is the : 171
+what is the : 141
+of the : 103
+what was : 78
+in the : 75
+what are : 75
+was the : 63
+what the : 62
+fear of : 62
+-- ABBR ---
+ngram_range= (2, 3)
+-----
+['what does', 'stand for', 'what is', 'is the', 'what is the', 'the abbreviation', 'does the', 'what does the', 'is the abbreviation', 'abbreviation for']
+what does : 48
+stand for : 41
+what is : 30
+is the : 16
+what is the : 14
+the abbreviation : 14
+does the : 12
+what does the : 12
+is the abbreviation : 8
+abbreviation for : 7
+-- HUM ---
+ngram_range= (2, 3)
+-----
+['of the', 'who was', 'was the', 'is the', 'who is', 'in the', 'who was the', 'what is', 'the first', 'who is the']
+of the : 156
+who was : 144
+was the : 124
+is the : 107
+who is : 107
+in the : 99
+who was the : 84
+what is : 62
+the first : 61
+who is the : 58
+-- NUM ---
+ngram_range= (2, 3)
+-----
+['how many', 'is the', 'what is', 'what is the', 'are there', 'was the', 'in the', 'how much', 'when was', 'how long']
+how many : 323
+is the : 136
+what is : 111
+what is the : 101
+are there : 71
+was the : 67
+in the : 61
+how much : 57
+when was : 53
+how long : 50
+-- LOC ---
+ngram_range= (2, 3)
+-----
+['is the', 'what is', 'what country', 'what is the', 'where is', 'in the', 'where can', 'of the', 'the world', 'what city']
+is the : 139
+what is : 95
+what country : 86
+what is the : 80
+where is : 77
+in the : 74
+where can : 67
+of the : 62
+the world : 57
+what city : 53

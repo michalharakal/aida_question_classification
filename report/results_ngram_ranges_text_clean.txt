@@ -1,0 +1,337 @@
+['DESC' 'ENTY' 'ABBR' 'HUM' 'NUM' 'LOC']
+-- DESC ---
+ngram_range= (1, 1)
+-----
+['what', 'how', 'why', 'mean', 'origin', 'get', 'name', 'difference', 'word', 'find']
+what : 749
+how : 278
+why : 104
+mean : 62
+origin : 54
+get : 37
+name : 32
+difference : 32
+word : 30
+find : 27
+-- ENTY ---
+ngram_range= (1, 1)
+-----
+['what', 'name', 'fear', 'first', 'kind', 'which', 'called', 'used', 'world', 'film']
+what : 1112
+name : 119
+fear : 66
+first : 50
+kind : 43
+which : 43
+called : 41
+used : 38
+world : 37
+film : 36
+-- ABBR ---
+ngram_range= (1, 1)
+-----
+['what', 'stand', 'abbreviation', 'mean', 'national', 'bureau', 'investigation', 'acronym', 'used', 'cnn']
+what : 81
+stand : 41
+abbreviation : 16
+mean : 9
+national : 5
+bureau : 5
+investigation : 5
+acronym : 4
+used : 3
+cnn : 3
+-- HUM ---
+ngram_range= (1, 1)
+-----
+['who', 'what', 'name', 'the', 'first', 'president', 'which', 'company', 'wrote', 'world']
+who : 559
+what : 535
+name : 144
+the : 86
+first : 82
+president : 65
+which : 46
+company : 44
+wrote : 38
+world : 37
+-- NUM ---
+ngram_range= (1, 1)
+-----
+['how', 'many', 'what', 'when', 'year', 'much', 'long', 'people', 'first', 'take']
+how : 479
+many : 323
+what : 245
+when : 124
+year : 68
+much : 57
+long : 56
+people : 41
+first : 35
+take : 31
+-- LOC ---
+ngram_range= (1, 1)
+-----
+['what', 'where', 'country', 'city', 'state', 'world', 'find', 'largest', 'name', 'river']
+what : 524
+where : 255
+country : 123
+city : 102
+state : 65
+world : 62
+find : 52
+largest : 46
+name : 32
+river : 26
+-- DESC ---
+ngram_range= (1, 2)
+-----
+['what', 'how', 'why', 'mean', 'origin', 'what origin', 'get', 'name', 'difference', 'what difference']
+what : 749
+how : 278
+why : 104
+mean : 62
+origin : 54
+what origin : 53
+get : 37
+name : 32
+difference : 32
+what difference : 32
+-- ENTY ---
+ngram_range= (1, 2)
+-----
+['what', 'name', 'fear', 'what fear', 'what name', 'first', 'kind', 'which', 'called', 'used']
+what : 1112
+name : 119
+fear : 66
+what fear : 62
+what name : 60
+first : 50
+kind : 43
+which : 43
+called : 41
+used : 38
+-- ABBR ---
+ngram_range= (1, 2)
+-----
+['what', 'stand', 'abbreviation', 'what abbreviation', 'mean', 'what stand', 'national', 'bureau', 'investigation', 'national bureau']
+what : 81
+stand : 41
+abbreviation : 16
+what abbreviation : 13
+mean : 9
+what stand : 8
+national : 5
+bureau : 5
+investigation : 5
+national bureau : 5
+-- HUM ---
+ngram_range= (1, 2)
+-----
+['who', 'what', 'name', 'the', 'first', 'president', 'which', 'company', 'what name', 'wrote']
+who : 559
+what : 535
+name : 144
+the : 86
+first : 82
+president : 65
+which : 46
+company : 44
+what name : 42
+wrote : 38
+-- NUM ---
+ngram_range= (1, 2)
+-----
+['how', 'many', 'how many', 'what', 'when', 'year', 'much', 'long', 'how much', 'how long']
+how : 479
+many : 323
+how many : 316
+what : 245
+when : 124
+year : 68
+much : 57
+long : 56
+how much : 54
+how long : 48
+-- LOC ---
+ngram_range= (1, 2)
+-----
+['what', 'where', 'country', 'city', 'what country', 'state', 'world', 'find', 'largest', 'where find']
+what : 524
+where : 255
+country : 123
+city : 102
+what country : 86
+state : 65
+world : 62
+find : 52
+largest : 46
+where find : 45
+-- DESC ---
+ngram_range= (2, 2)
+-----
+['what origin', 'what difference', 'how find', 'how get', 'origin word', 'what causes', 'what meaning', 'what name', 'what definition', 'what history']
+what origin : 53
+what difference : 32
+how find : 25
+how get : 22
+origin word : 17
+what causes : 16
+what meaning : 12
+what name : 12
+what definition : 11
+what history : 9
+-- ENTY ---
+ngram_range= (2, 2)
+-----
+['what fear', 'what name', 'what kind', 'what color', 'what first', 'what film', 'what term', 'what common', 'what animal', 'soft drink']
+what fear : 62
+what name : 60
+what kind : 37
+what color : 27
+what first : 15
+what film : 14
+what term : 13
+what common : 13
+what animal : 13
+soft drink : 13
+-- ABBR ---
+ngram_range= (2, 2)
+-----
+['what abbreviation', 'what stand', 'national bureau', 'bureau investigation', 'what abbreviated', 'what letters', 'what acronym', 'what full', 'general motors', 'what ioc']
+what abbreviation : 13
+what stand : 8
+national bureau : 5
+bureau investigation : 5
+what abbreviated : 3
+what letters : 3
+what acronym : 3
+what full : 2
+general motors : 2
+what ioc : 2
+-- HUM ---
+ngram_range= (2, 2)
+-----
+['what name', 'who first', 'who wrote', 'who invented', 'what president', 'who portrayed', 'who played', 'what company', 'what famous', 'who created']
+what name : 42
+who first : 33
+who wrote : 29
+who invented : 28
+what president : 18
+who portrayed : 17
+who played : 15
+what company : 14
+what famous : 14
+who created : 13
+-- NUM ---
+ngram_range= (2, 2)
+-----
+['how many', 'how much', 'how long', 'many people', 'what year', 'in year', 'what average', 'how old', 'long take', 'many years']
+how many : 316
+how much : 54
+how long : 48
+many people : 35
+what year : 23
+in year : 19
+what average : 16
+how old : 15
+long take : 14
+many years : 12
+-- LOC ---
+ngram_range= (2, 2)
+-----
+['what country', 'where find', 'what city', 'what state', 'what largest', 'what two', 'where get', 'what name', 'what capital', 'united states']
+what country : 86
+where find : 45
+what city : 45
+what state : 40
+what largest : 20
+what two : 17
+where get : 13
+what name : 12
+what capital : 12
+united states : 11
+-- DESC ---
+ngram_range= (2, 3)
+-----
+['what origin', 'what difference', 'how find', 'how get', 'origin word', 'what origin word', 'what causes', 'what meaning', 'what name', 'what definition']
+what origin : 53
+what difference : 32
+how find : 25
+how get : 22
+origin word : 17
+what origin word : 17
+what causes : 16
+what meaning : 12
+what name : 12
+what definition : 11
+-- ENTY ---
+ngram_range= (2, 3)
+-----
+['what fear', 'what name', 'what kind', 'what color', 'what first', 'what film', 'what term', 'what common', 'what animal', 'soft drink']
+what fear : 62
+what name : 60
+what kind : 37
+what color : 27
+what first : 15
+what film : 14
+what term : 13
+what common : 13
+what animal : 13
+soft drink : 13
+-- ABBR ---
+ngram_range= (2, 3)
+-----
+['what abbreviation', 'what stand', 'national bureau', 'bureau investigation', 'national bureau investigation', 'what abbreviated', 'what letters', 'what acronym', 'what full', 'general motors']
+what abbreviation : 13
+what stand : 8
+national bureau : 5
+bureau investigation : 5
+national bureau investigation : 5
+what abbreviated : 3
+what letters : 3
+what acronym : 3
+what full : 2
+general motors : 2
+-- HUM ---
+ngram_range= (2, 3)
+-----
+['what name', 'who first', 'who wrote', 'who invented', 'what president', 'who portrayed', 'who played', 'what company', 'what famous', 'who created']
+what name : 42
+who first : 33
+who wrote : 29
+who invented : 28
+what president : 18
+who portrayed : 17
+who played : 15
+what company : 14
+what famous : 14
+who created : 13
+-- NUM ---
+ngram_range= (2, 3)
+-----
+['how many', 'how much', 'how long', 'many people', 'how many people', 'what year', 'in year', 'what average', 'how old', 'long take']
+how many : 316
+how much : 54
+how long : 48
+many people : 35
+how many people : 35
+what year : 23
+in year : 19
+what average : 16
+how old : 15
+long take : 14
+-- LOC ---
+ngram_range= (2, 3)
+-----
+['what country', 'where find', 'what city', 'what state', 'what largest', 'what two', 'where get', 'what name', 'what capital', 'united states']
+what country : 86
+where find : 45
+what city : 45
+what state : 40
+what largest : 20
+what two : 17
+where get : 13
+what name : 12
+what capital : 12
+united states : 11

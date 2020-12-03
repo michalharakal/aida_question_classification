@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 import data.get_data as data
-
+import utils.text_manipulation as txtm
 
 def sort_vocab(vocab_matrix):
     tuples = zip(vocab_matrix.col, vocab_matrix.data)
@@ -25,6 +25,13 @@ def extract_topn_from_vector(feature_names, sorted_items, topn=10):
 
     return results
 
+
+def preprocess_stpw_clean_lem(df_train, df_test):
+
+    df_train = txtm.preprocess_dataframe(df_train)
+    df_test = txtm.preprocess_dataframe(df_test)
+
+    return df_train, df_test
 
 def ng_CountVectorizer(X_train, ngram_range=(1, 3)):
     """
@@ -102,26 +109,35 @@ def main():
     # loading data and working with pd df
     df_train = data.get_train_data()
     df_test = data.get_test_data()
+
+    # using cleaned df with augmented questions
+
+    df_train, df_test = preprocess_stpw_clean_lem(df_train, df_test)
+
+    # X_train = df_train['question'] # all full text
+
     categories = df_train.category.unique()
     print(categories)
 
-    # X_train = df_train['question'] # all full text
-    # X_train_desc = df_train[df_train.category == 'DESC']['question']
-    # category = 'DESC'
-
+    #################
     # default setting for ngram viz
-    df_col = 'question'
-    ngram_range = (2, 3)
+    #################
+
+    # df_col = 'question' # main without changes
+    # df_col = 'text_stopwords'  # main without stopwords
+    # df_col = 'text_clean'  # main without stopwords and regex cleaned lowercase
+    df_col = 'text_lemma'  # main without stopwords, regex cleaned lowercase, lemma
+
+    ngram_range = (1, 2)
     topn = 10
+    ngram_ranges = [(1, 1), (1, 2), (2, 2), (2, 3)]
 
-    for category in categories:
-        print()
-        print('--', category, '---')
-        x_train = get_category_texts(df_train, category, df_col)
-        get_category_ngrams(x_train, ngram_range, topn)
-
-    print()
-
+    for ngram_range in ngram_ranges:
+        for category in categories:
+            print()
+            print('--', category, '---')
+            x_train = get_category_texts(df_train, category, df_col)
+            get_category_ngrams(x_train, ngram_range, topn)
 
 if __name__ == '__main__':
     main()
