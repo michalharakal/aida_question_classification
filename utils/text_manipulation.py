@@ -15,13 +15,11 @@ def corpus_func(df, column):
     '''
     create a textcorpus from pd.series
 
-    Parameters
-    ----------
-    text, string
+    param : df = data frame as variable
+            column = name of column as string
 
-    Return
-    ------
-    concatinated string with marker ##### as selector
+    returns:
+    string, concatinated with marker '#####' as selector
     '''
 
     return "######".join(text for text in df[column])
@@ -51,47 +49,32 @@ def preprocess_dataframe(df):
     return df
 
 
-def clean_text(text):
+def clean_text(text, digi_punct):
     """
     Regex cleaning of the text. Filters everything except alphanumerical and '.
     Return is turned into lower case
 
-    Parameters
-    ----------
-    text : string
-        text to be cleaned
+    param: text : string, text to be cleaned
 
-    Returns
-    -------
-    string
-        lower case regex cleaned text
-
+    returns: string, lower case regex cleaned text
     """
     text = text.replace("´", "'")
-
-    digi_punct = "[^a-zA-Z.1234567890'# ]"
     text = re.sub(digi_punct, " ", text)
+    digi_punct = "[^a-zA-Z.1234567890'# ]"  #used by clean_text(text_corpus)
+    # digi_punct = "[^a-zA-Z.1234567890' ]"
     text = " ".join(text.split())
     text = text.lower()
     return text
-
 
 
 def stopword_text(text):
     """
     Remove all words in the text that are in the stopword list
      
-    Parameters
-    ----------
-    text : string
+    param: string, text
     
-    Returns
-    -------
-    string
-        text only stopwords
-     
+    returns: string, text only stopwords
     """
-
     return " ".join([word for word in text.split() if word not in my_stopwords])
 
 
@@ -101,14 +84,9 @@ def lem_text(text):
     Group the different inflected forms of a word so they can be analysed as 
     a single item
      
-    Parameters
-    ----------
-    text : string
+    param: string, text
     
-    Returns
-    -------
-    string
-        text with lemmas
+    returns: string, text with lemmas
     """
 
     lem_sentence = text.split()
