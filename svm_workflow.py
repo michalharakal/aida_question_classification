@@ -85,32 +85,42 @@ def main():
 
     pipe_tf = Pipeline(steps=[
         ('data_vec', TfidfVectorizer()),
-        # ('model', LogisticRegressionCV())
         ('model', svm.LinearSVC())  # C=10.0
     ])
     print('cross_val_score, TfidfVectorized :', cross_val_score(pipe_tf, X_train, y_train).mean())
 
     pipe_cv = Pipeline(steps=[
         ('data_cv', CountVectorizer(stop_words=[])),
-        # ('model', LogisticRegressionCV())
         ('model', svm.LinearSVC())
     ])
-    print('cross_val_score, CountVectorized  pipe_cv_no_stop_words:', cross_val_score(pipe_cv, X_train, y_train).mean())
+    print('cross_val_score, CountVectorized  pipe_cv_no_stop_words: default ngram_range=(1, 1)', cross_val_score(pipe_cv, X_train, y_train).mean())
 
     pipe_cv_ng12 = Pipeline(steps=[
         ('data_cv', CountVectorizer(stop_words=[], ngram_range=(1, 2))),
-        # ('model', LogisticRegressionCV())
         ('model', svm.LinearSVC())
     ])
     print('cross_val_score, pipe_cv_no_stop_words ngram_range=(1, 2) :', cross_val_score(pipe_cv_ng12, X_train, y_train).mean())
 
     pipe_cv_ng13 = Pipeline(steps=[
         ('data_cv', CountVectorizer(stop_words=[], ngram_range=(1, 3))),
-        # ('model', LogisticRegressionCV())
         ('model', svm.LinearSVC())
     ])
     print('cross_val_score, pipe_cv_no_stop_words ngram_range=(1, 3) :',
           cross_val_score(pipe_cv_ng13, X_train, y_train).mean())
+
+    pipe_cv_ng22 = Pipeline(steps=[
+        ('data_cv', CountVectorizer(stop_words=[], ngram_range=(2, 2))),
+        ('model', svm.LinearSVC())
+    ])
+    print('cross_val_score, pipe_cv_ng22 ngram_range=(2, 2) :',
+          cross_val_score(pipe_cv_ng22, X_train, y_train).mean())
+
+    pipe_cv_ng23 = Pipeline(steps=[
+        ('data_cv', CountVectorizer(stop_words=[], ngram_range=(2, 3))),
+        ('model', svm.LinearSVC())
+    ])
+    print('cross_val_score, pipe_cv_ng23 ngram_range=(2, 3) :',
+          cross_val_score(pipe_cv_ng23, X_train, y_train).mean())
 
     ##############################
     # Measuring the performance
@@ -131,6 +141,14 @@ def main():
     pipe_cv_ng13.fit(X_train, y_train)
     print('results pipe_cv_no_stop_words ngram_range=(1, 3) fkt:')
     pipeline_results(pipe_cv_ng13, X_test, y_test)
+
+    pipe_cv_ng22.fit(X_train, y_train)
+    print('results pipe_cv_ng22 ngram_range=(2, 2) fkt:')
+    pipeline_results(pipe_cv_ng22, X_test, y_test)
+
+    pipe_cv_ng23.fit(X_train, y_train)
+    print('results pipe_cv_ng23 ngram_range=(2, 3) fkt:')
+    pipeline_results(pipe_cv_ng23, X_test, y_test)
 
 if __name__ == '__main__':
     main()
