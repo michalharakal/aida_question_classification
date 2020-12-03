@@ -72,8 +72,8 @@ def encode_classes(train_df, test_df, category_col="category"):
     return y_train.values, y_test.values
 
 
-def preprocess_data(train_df, test_df, data_column="question", classes_column = "category"):
-    # preprocessed_train, preprocessed_test = preprocess_text(train_df, test_df)
+def preprocess_data(train_df, test_df, data_column="question", classes_column="category"):
+    train_df, test_df = preprocess_text(train_df, test_df)
     sequenced_train, sequenced_test, sequence_length, vocab_size_train = \
         create_sequences(train_df, test_df, data_column)
     encoded_train, encoded_test = encode_classes(train_df, test_df, classes_column)

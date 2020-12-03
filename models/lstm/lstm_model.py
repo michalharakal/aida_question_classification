@@ -1,17 +1,16 @@
-import os
-
 import numpy
 from keras.models import Sequential
 from keras.layers import Dense
 from keras.layers import Dropout
 from keras.layers import LSTM
 from keras.layers import Embedding
-from keras.callbacks import TensorBoard
 from keras.backend import clear_session
-from tensorflow.keras.models import load_model
+from tensorflow.keras.models import load_model, save_model
 from tensorflow.keras.utils import plot_model
 import datetime
-import pydot
+import pickle
+import glob
+import os
 
 # Model parameters
 LSTM_SIZE = 100
@@ -23,20 +22,54 @@ numpy.random.seed(7)
 
 
 def model_name_2_file_name(model_name):
+    """ Return model file name from model name, contain relative path """
     return os.path.join("./models", model_name + ".h5")
 
 
 def model_name_2_plot_name(model_name):
+    """ Return image file name from model name, contain relative path """
     return os.path.join("./models", model_name + ".png")
 
 
 def new_model_needed(model_name):
+    """
+    Check if trained model already exists.
+    :return: true if a new model has to be created
+    """
     return os.path.isfile(model_name_2_file_name(model_name)) is False
 
 
-def load_local_model(model_name):
+def load_local_model(model_name: str):
+    """
+    Load model from the file.
+    :return: Model. Throws error if file not found
+    """
     file_name = model_name_2_file_name(model_name)
     return load_model(file_name)
+
+
+def save_model_locally(model):
+    """ Save trained model locally in Teras format"""
+    file_name = model_name_2_file_name(model.name)
+    save_model(model, file_name)
+
+
+def save_history_locally(model, history):
+    """ Save history. Add timestamp to file name"""
+    timestamp = datetime.datetime.today().strftime('%Y%m%d_%H%M')
+    filename = f"{model.name}-{timestamp}.pkl"
+    with open(os.path.join("./report", filename), 'wb') as pickle_out:
+        pickle.dump(history.history, pickle_out)
+
+
+def load_latest_local_history(model):
+    """ iterate over local folder and return the latest history file for given model"""
+    list_of_files = glob.glob(f"./report/{model.name}*.pkl")  # * means all if need specific format then *.csv
+    if list_of_files is None or len(list_of_files) == 0:
+        return None
+    latest_file_name = max(list_of_files, key=os.path.getctime)
+    with open(latest_file_name, 'rb') as fid:
+        return pickle.load(fid)
 
 
 def plot_model_summary(model):
@@ -105,8 +138,11 @@ def evaluate(model, X_test, y_test):
 
 
 def train(model, X_train, Y_train):
-    tensorboard = TensorBoard(log_dir='logskeras/{}'.format(datetime.datetime.today().strftime('%Y%m%d_%H%M')))
-
-    history = model.fit(X_train, Y_train, batch_size=32, epochs=5, verbose=1, validation_split=0.1,
-                        callbacks=[tensorboard])
-    return history
+    latest_local_history = load_latest_local_history(model)
+    if new_model_needed(model.name) or latest_local_history is None:
+        history = model.fit(X_train, Y_train, batch_size=32, epochs=5, verbose=1, validation_split=0.1)
+        save_model_locally(model)
+        save_history_locally(model, history)
+        return history.history
+    else:
+        return latest_local_history
