@@ -92,6 +92,29 @@ def get_test_data(test_file='TREC_10.label.txt'):
     return process_pd_input(test_file)
 
 
+def clean_duplicates(df, column):
+    '''
+    Find duplicates and drop by 100% match
+
+    :param
+    df; name of the DataFrame
+    column; to column to be examined
+
+    :return:
+    duplicates; to check whether duplicates present
+           df; clean df only duplicates
+    '''
+
+    duplicat = list(df[column].duplicated())
+    print(set(duplicat))
+
+    count_dups = df.pivot_table(index=['raw'], aggfunc='size')
+    nb = len(df[column]) - len(count_dups)
+    return set(duplicat), df
+
+
+
+
 def main():
     """
     Testing some function in file
