@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+from keras.preprocessing import sequence
 
 
 def print_predictions(model, tokenizer, test_X, test_df, category_column="category"):
@@ -24,3 +25,14 @@ def print_predictions(model, tokenizer, test_X, test_df, category_column="catego
         print('    Label category->', test_df[category_column][i])
         print('    Label predict->', test_categories[np.argmax(predictions[i])])
         print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+
+
+def predict_lstm(model, tokenizer, train_df, question):
+    tokenized_question = tokenizer.texts_to_sequences([question])
+    max_question_length = train_df["question"].str.len().max()
+    padded_question = sequence.pad_sequences(tokenized_question, maxlen=max_question_length, value=0.)
+    prediction = model.predict(padded_question)
+    y_pred_class_index = np.argmax(prediction, axis=1)
+    test_categories = pd.get_dummies(train_df["category"]).columns
+    predicted_class_label = np.array([test_categories[index] for index in y_pred_class_index])
+    return predicted_class_label

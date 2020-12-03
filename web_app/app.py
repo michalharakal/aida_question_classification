@@ -7,6 +7,9 @@ import classifier as cs
 
 app = Flask(__name__)
 
+# create classifier instance on start once
+classifier = cs.Classifier()
+
 
 @app.route('/')
 def index():
@@ -17,7 +20,7 @@ def index():
 def say_name():
     json = request.get_json()
     question = json['question']
-    return jsonify(question=question, category=cs.get_category(question))
+    return jsonify(question=question, category=classifier.get_category(question))
 
 
 if __name__ == '__main__':

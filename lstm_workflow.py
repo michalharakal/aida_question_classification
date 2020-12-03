@@ -3,7 +3,7 @@ import data.preprocess as dp
 from models.lstm import lstm_model as lstm_model
 from models.lstm import evaluate as lstm_evaluate
 import utils.tf_utils as tf_utils
-import models.lstm.predict_lstm as lstm_predict
+import models.lstm.lstm_predict as lstm_predict
 
 
 def prepare_data(data_column="question", classes_column="category"):

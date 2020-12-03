@@ -1,12 +1,8 @@
-from pandas import CategoricalDtype
-
 import utils.text_manipulation as text
-from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 import pandas as pd
 from keras.preprocessing import sequence
 
 from keras.preprocessing.text import Tokenizer
-from keras.utils import to_categorical
 
 
 def preprocess_text(df_train_raw, df_test_raw):
@@ -31,7 +27,7 @@ def preprocess_text(df_train_raw, df_test_raw):
 def common_tokenizer(df_train, df_test, column="question"):
     data = pd.concat([df_train, df_test])
     tokenizer = Tokenizer()
-    tokenizer.fit_on_texts(data['question'].values)
+    tokenizer.fit_on_texts(data[column].values)
     return tokenizer
 
 
@@ -77,4 +73,5 @@ def preprocess_data(train_df, test_df, data_column="question", classes_column="c
     sequenced_train, sequenced_test, sequence_length, vocab_size_train, tokenizer = \
         create_sequences(train_df, test_df, data_column)
     encoded_train, encoded_test = encode_classes(train_df, test_df, classes_column)
-    return (sequenced_train, encoded_train), (sequenced_test, encoded_test), sequence_length, vocab_size_train, tokenizer
+    return (sequenced_train, encoded_train), (
+    sequenced_test, encoded_test), sequence_length, vocab_size_train, tokenizer

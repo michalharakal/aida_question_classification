@@ -11,7 +11,7 @@ def evaluate_lstm(model, X_test, y_test, df_test):
     y_pred = model.predict(X_test, batch_size=64, verbose=1)
     y_pred_class_index = np.argmax(y_pred, axis=1)
     test_categories = pd.get_dummies(df_test["category"]).columns
-    predicted_class_label = np.array( [test_categories[index] for index in y_pred_class_index])
+    predicted_class_label = np.array([test_categories[index] for index in y_pred_class_index])
     print(classification_report(df_test["category"], predicted_class_label))
 
 
