@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html>
+    <body>
+        <form id="name_form">
+            <label>Question:</label><input type="text" name="question"/>
+            <br/>
+            <input type="submit" value="submit" />
+        </form>
+        <div id="answer">
+
+        </div>
+
+        <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+        <script type="text/javascript">
+            $('#name_form').submit(function(e) {
+                    e.preventDefault();
+
+                    var data = {};
+                    var Form = this;
+
+                    $.each(this.elements, function(i, v) {
+                        const input = $(v);
+                        data[input.attr("name")] = input.val();
+                        delete data["undefined"];
+                    });
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/api/classify',
+                        dataType: 'json',
+                        contentType: 'application/json; charset=utf-8',
+                        data: JSON.stringify(data),
+                        context: Form,
+                        success: function(callback) {
+                            console.log(callback);
+                            // Watch out for Cross Site Scripting security issues when setting dynamic content!
+                            $('#answer').html(callback.category + callback.question)
+                        },
+                        error: function() {
+                            $(this).html("error!");
+                        }
+                    });
+                });
+        </script>
+    </body>
+</html>
