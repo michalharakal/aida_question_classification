@@ -62,7 +62,7 @@ def create_sequences(preprocessed_train, preprocessed_test, column="question"):
     max_len = max(max_len_train, max_len_test)
     test_X = sequence.pad_sequences(tokenized_test, maxlen=train_X.shape[1], value=0.)
 
-    return train_X, test_X, train_X.shape[1], vocab_size_train
+    return train_X, test_X, train_X.shape[1], vocab_size_train, tokenizer
 
 
 def encode_classes(train_df, test_df, category_col="category"):
@@ -74,7 +74,7 @@ def encode_classes(train_df, test_df, category_col="category"):
 
 def preprocess_data(train_df, test_df, data_column="question", classes_column="category"):
     train_df, test_df = preprocess_text(train_df, test_df)
-    sequenced_train, sequenced_test, sequence_length, vocab_size_train = \
+    sequenced_train, sequenced_test, sequence_length, vocab_size_train, tokenizer = \
         create_sequences(train_df, test_df, data_column)
     encoded_train, encoded_test = encode_classes(train_df, test_df, classes_column)
-    return (sequenced_train, encoded_train), (sequenced_test, encoded_test), sequence_length, vocab_size_train
+    return (sequenced_train, encoded_train), (sequenced_test, encoded_test), sequence_length, vocab_size_train, tokenizer

@@ -3,6 +3,7 @@ import data.preprocess as dp
 from models.lstm import lstm_model as lstm_model
 from models.lstm import evaluate as lstm_evaluate
 import utils.tf_utils as tf_utils
+import models.lstm.predict_lstm as lstm_predict
 
 
 def prepare_data(data_column="question", classes_column="category"):
@@ -10,27 +11,26 @@ def prepare_data(data_column="question", classes_column="category"):
     test_df = data.get_test_data()
     train_df = data.get_train_data()
     # preprocess data
-    (X_train, y_train), (X_test, y_test), sequence_length, vocab_size = dp.preprocess_data(train_df, test_df,
+    (X_train, y_train), (X_test, y_test), sequence_length, vocab_size, tokenizer = dp.preprocess_data(train_df, test_df,
                                                                                            data_column, classes_column)
-    return (X_train, y_train), (X_test, y_test), sequence_length, vocab_size
+    return (X_train, y_train), (X_test, y_test), sequence_length, vocab_size, tokenizer
 
 
 def lstm_dropout_model_unprocessed_data():
-    # get data
-    test_df = data.get_test_data()
-    train_df = data.get_train_data()
-    # preprocess data
-    (X_train, y_train), (X_test, y_test), sequence_length, vocab_size = dp.preprocess_data(train_df, test_df)
+    # get and preprocess data
+    (X_train, y_train), (X_test, y_test), sequence_length, vocab_size, tokenizer = prepare_data(data_column="text")
     # build and train model
     model = lstm_model.build_classifier_lstm_dropout(vocab_size, sequence_length, y_train.shape[1])
     history = lstm_model.train(model, X_train, y_train)
     # evaluate
     lstm_evaluate.evaluate(model, X_test, y_test)
     lstm_evaluate.render_plot(model.name, history)
+    test_df = data.get_test_data()
+    lstm_predict.print_predictions(model, tokenizer, X_test, test_df)
 
 
 def simple_model_simple_lemmas_data():
-    (X_train, y_train), (X_test, y_test), sequence_length, vocab_size = prepare_data(data_column="text")
+    (X_train, y_train), (X_test, y_test), sequence_length, vocab_size, tokenizer = prepare_data(data_column="text")
     # build and train model
     model = lstm_model.build_classifier(vocab_size, sequence_length, y_train.shape[1])
     history = lstm_model.train(model, X_train, y_train)
