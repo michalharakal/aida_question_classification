@@ -59,7 +59,7 @@ def pipeline_results(pipeline, X_test, y_test, name='pipe'):
     print('accuracy_score: CountVectorized', accuracy_score(y_test, y_pred_pipeline))
 
     report = classification_report(y_test, y_pred_pipeline, output_dict=True)
-    df = pd.DataFrame(report).transpose()
+    df = pd.DataFrame(report).transpose().round(2)
     print(df)
     # save df results to cvs for later report
     df.to_csv( './report/' + name + '.csv')
