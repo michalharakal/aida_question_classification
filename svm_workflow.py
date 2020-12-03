@@ -1,4 +1,5 @@
 import pandas as pd
+import matplotlib.pyplot as plt
 
 import data.get_data as data
 import utils.text_manipulation as txtm
@@ -47,7 +48,7 @@ def pipeline_results(pipeline, X_test, y_test, name='pipe'):
     """
     print pipeline results for given pipeline and X, y values
 
-    :param name:
+    :param name: unique to save class rep in report dir
     :param pipeline: fitted sklearn pipeline
     :param X_test: X_test values
     :param y_test: y_test values
@@ -64,8 +65,16 @@ def pipeline_results(pipeline, X_test, y_test, name='pipe'):
     # save df results to cvs for later report
     df.to_csv( './report/' + name + '.csv')
 
-    val_confusion_matrix = confusion_matrix(y_test, y_pred_pipeline)
-    print(f'Confusion Matrix: \n{val_confusion_matrix}')
+    # activate one or the other for of a confusion_matrix
+    plot = True
+    if plot:
+        plot_confusion_matrix(pipeline, X_test, y_test, values_format="", cmap=plt.cm.Blues)
+        plt.title(name)
+        plt.savefig(f"plots/{name}.png")
+        plt.show()
+    else:
+        val_confusion_matrix = confusion_matrix(y_test, y_pred_pipeline)
+        print(f'Confusion Matrix: \n{val_confusion_matrix}')
 
 
 def main():
