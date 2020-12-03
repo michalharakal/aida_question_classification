@@ -104,7 +104,7 @@ def clean_duplicates(df):
         df; clean df only duplicates
     '''
 
-    clean_duplicates(df.raw)
+    df = df.drop_duplicates(inplace=True)
     return df
 
 
