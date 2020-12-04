@@ -4,22 +4,27 @@
 Category classification
 
 - [X] Basic project structure @sven
-- [ ] Project description @Petra
-- [ ] Import data into data frame @Michal
-- [ ] Basic data analysis @Andreas
-- [ ] Classes representation visualization
+- [X] Project description @Petra
+- [X] Import data into data frame @Michal
+- [X] Basic data analysis @Andreas
+- [X] Classes representation visualization
   
 - [X] text processing (tokenize, stemming, lemming) @sven
   
 - [X] Data preprocessing @Petra
-- [ ] Base Model
-- [ ] SVM @Andreas @Sven
-- [ ] LSTM Model @Michal @Petra
-- [ ] F1 validation
-- [ ] Model comparison
-- [ ] Conclusion
-- [ ] Report (DOC)
-- [ ] Report (Prezi)
+- [X] Base Model
+- [X] SVM @Andreas @Sven
+- [X] LSTM Model @Michal @Petra
+- [X] F1 validation
+- [X] Model comparison
+- [X] Outlook
+- [X] Report (DOC)
+- [X] Report (Prezi)
+
+
+## Presentation
+ [Resulting presentation can be seen as PDF here](report/Question%20Classification%20Project.pdf)
+ [Resulting presentation can be seen as PDF here](report/Report%20Group%20A.pdf)
 
 
 ## Initial playground
