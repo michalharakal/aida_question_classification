@@ -1,27 +1,8 @@
-import utils.text_manipulation as text
+import utils.text_manipulation as txtm
 import pandas as pd
 from keras.preprocessing import sequence
 
 from keras.preprocessing.text import Tokenizer
-
-
-def preprocess_text(df_train_raw, df_test_raw):
-    df_train = df_train_raw.copy()
-    df_test = df_test_raw.copy()
-
-    # apply regex text cleaning
-    df_train['text'] = df_train.question.apply(text.clean_text)
-    df_test['text'] = df_test.question.apply(text.clean_text)
-
-    # apply stopword manipulation
-    df_train['text'] = df_train.text.apply(text.stopword_text)
-    df_test['text'] = df_test.text.apply(text.stopword_text)
-
-    # apply lemmatizer
-    df_train['text'] = df_train.text.apply(text.lem_text)
-    df_test['text'] = df_test.text.apply(text.lem_text)
-
-    return df_train, df_test
 
 
 def common_tokenizer(df_train, df_test, column="question"):
@@ -69,7 +50,8 @@ def encode_classes(train_df, test_df, category_col="category"):
 
 
 def preprocess_data(train_df, test_df, data_column="question", classes_column="category"):
-    train_df, test_df = preprocess_text(train_df, test_df)
+    train_df = txtm.preprocess_dataframe(train_df)
+    test_df = txtm.preprocess_dataframe(test_df)
     sequenced_train, sequenced_test, sequence_length, vocab_size_train, tokenizer = \
         create_sequences(train_df, test_df, data_column)
     encoded_train, encoded_test = encode_classes(train_df, test_df, classes_column)
