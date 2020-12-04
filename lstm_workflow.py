@@ -2,7 +2,6 @@ import data.get_data as data
 import data.preprocess as dp
 from models.lstm import lstm_model as lstm_model
 from models.lstm import evaluate as lstm_evaluate
-import utils.tf_utils as tf_utils
 import models.lstm.lstm_predict as lstm_predict
 
 
@@ -12,7 +11,8 @@ def prepare_data(data_column="question", classes_column="category"):
     train_df = data.get_train_data()
     # preprocess data
     (X_train, y_train), (X_test, y_test), sequence_length, vocab_size, tokenizer = dp.preprocess_data(train_df, test_df,
-                                                                                           data_column, classes_column)
+                                                                                                      data_column,
+                                                                                                      classes_column)
     return (X_train, y_train), (X_test, y_test), sequence_length, vocab_size, tokenizer
 
 
@@ -21,6 +21,34 @@ def lstm_dropout_model_unprocessed_data():
     (X_train, y_train), (X_test, y_test), sequence_length, vocab_size, tokenizer = prepare_data()
     # build and train model
     model = lstm_model.build_classifier_lstm_dropout(vocab_size, sequence_length, y_train.shape[1])
+    history = lstm_model.train(model, X_train, y_train)
+    # evaluate
+    test_df = data.get_test_data()
+    lstm_evaluate.evaluate_lstm(model, X_test, y_test, test_df)
+    lstm_evaluate.render_plot(model.name, history)
+    test_df = data.get_test_data()
+    lstm_predict.print_predictions(model, tokenizer, X_test, test_df)
+
+
+def lstm3_model_unprocessed_data():
+    # get and preprocess data
+    (X_train, y_train), (X_test, y_test), sequence_length, vocab_size, tokenizer = prepare_data()
+    # build and train model
+    model = lstm_model.build_classifier_lstm3(vocab_size, sequence_length, y_train.shape[1])
+    history = lstm_model.train(model, X_train, y_train)
+    # evaluate
+    test_df = data.get_test_data()
+    lstm_evaluate.evaluate_lstm(model, X_test, y_test, test_df)
+    lstm_evaluate.render_plot(model.name, history)
+    test_df = data.get_test_data()
+    lstm_predict.print_predictions(model, tokenizer, X_test, test_df)
+
+
+def lstm2_dense2_model_unprocessed_data():
+    # get and preprocess data
+    (X_train, y_train), (X_test, y_test), sequence_length, vocab_size, tokenizer = prepare_data()
+    # build and train model
+    model = lstm_model.build_classifier_lstm2_dense2(vocab_size, sequence_length, y_train.shape[1])
     history = lstm_model.train(model, X_train, y_train)
     # evaluate
     test_df = data.get_test_data()
@@ -64,6 +92,8 @@ def export_plot_models():
 
 
 if __name__ == '__main__':
-    tf_utils.activate_compatibility_allow_growth()
+    # tf_utils.activate_compatibility_allow_growth()
     lstm_dropout_model_unprocessed_data()
+    lstm2_dense2_model_unprocessed_data()
+    lstm3_model_unprocessed_data()
     # export_plot_models()
