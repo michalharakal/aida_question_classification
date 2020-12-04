@@ -63,7 +63,7 @@ def pipeline_results(pipeline, X_test, y_test, name='pipe'):
     df = pd.DataFrame(report).transpose().round(2)
     print(df)
     # save df results to cvs for later report
-    df.to_csv( './report/' + name + '.csv')
+    df.to_csv('./report/svm_' + name + '.csv')
 
     # activate one or the other for of a confusion_matrix
     plot = True
@@ -89,8 +89,8 @@ def main():
 
     # defining main test and train data of main categories
     # df col with text and cat/subcategory to be used
-    #df_col = 'text_stopwords'
-    df_col = 'question'
+    df_col = 'text_stopwords'
+    # df_col = 'question'
     # cat
     # category = 'subcategory'
     category = 'category'
