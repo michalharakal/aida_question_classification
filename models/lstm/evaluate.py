@@ -56,6 +56,7 @@ def lstm_report_plot(plot_name='lstm_f1_results.png'):
     plt.title('F1 Scores over different models')
     plt.ylabel('values')
     plt.xticks(rotation=15)
+    plt.grid('on')
 
     plt.savefig(f'./plots/{plot_name}')
     plt.show()
