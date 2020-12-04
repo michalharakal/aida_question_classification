@@ -45,7 +45,7 @@ def ng_CountVectorizer(X_train, ngram_range=(1, 3)):
     -------
 
     """
-    print('ngram_range=', ngram_range)
+    # print('ngram_range=', ngram_range)
     count_vectorizer = CountVectorizer(stop_words=None, ngram_range=ngram_range)
     bag_of_words = count_vectorizer.fit_transform(X_train)
 
@@ -96,10 +96,10 @@ def get_category_ngrams(x_train, ngram_range=(1, 1), topn=10):
     max_words = dict((word, df_bag_of_words[word].sum()) for word in vocabulary)
     smax_words = sorted(max_words, key=max_words.get, reverse=True)[:topn]
 
-    print('-----')
-    print(smax_words)
+    print('words:', smax_words)
+    print('words: wordcount ', end=' ')
     for word in smax_words:
-        print(word, ':', max_words[word])
+        print(word, ':', max_words[word], end=', ')
 
 
 def main():
@@ -123,19 +123,21 @@ def main():
     # default setting for ngram viz
     #################
 
-    # df_col = 'question' # main without changes
+    #df_col = 'question' # main without changes
     # df_col = 'text_stopwords'  # main without stopwords
-    # df_col = 'text_clean'  # main without stopwords and regex cleaned lowercase
-    df_col = 'text_lemma'  # main without stopwords, regex cleaned lowercase, lemma
+    df_col = 'text_clean'  # main without stopwords and regex cleaned lowercase
+    # df_col = 'text_lemma'  # main without stopwords, regex cleaned lowercase, lemma
 
     ngram_range = (1, 2)
     topn = 10
-    ngram_ranges = [(1, 1), (1, 2), (2, 2), (2, 3)]
+    ngram_ranges = [(1, 1), (1, 2), (2, 2), (1, 3), (2, 3), (3, 3)]
 
     for ngram_range in ngram_ranges:
+        print()
+        print('ngram_range:', ngram_range)
         for category in categories:
             print()
-            print('--', category, '---')
+            print('Category:', category, end=' ')
             x_train = get_category_texts(df_train, category, df_col)
             get_category_ngrams(x_train, ngram_range, topn)
 
