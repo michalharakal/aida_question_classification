@@ -7,9 +7,13 @@ import os
 #%%
 
 
-files = glob.glob('report/question_*.csv')
+svm_files = glob.glob('report/svm_*.csv')
 lstm_files = glob.glob('report/LSTM*.csv')
-files = files + lstm_files
+
+# files = svm_files + lstm_files
+files = svm_files
+
+count_files = len(files)
 
 df = pd.concat([pd.read_csv(fp).assign(filename=os.path.basename(fp).split(',')[0]) for fp in files])
 
@@ -26,6 +30,11 @@ df[['category', 'f1', 'filename']]
 
 df_pv = df.pivot_table(columns=['filename'], index=['category']).round(2)
 
-print(df_pv)
 
+df_f1 = df_pv['f1']
+
+#%%
+df_f1.to_csv('f1.csv')
+
+df_f1.to_html('f1.html')
 
