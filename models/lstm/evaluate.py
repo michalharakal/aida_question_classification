@@ -12,7 +12,10 @@ def evaluate_lstm(model, X_test, y_test, df_test):
     y_pred_class_index = np.argmax(y_pred, axis=1)
     test_categories = pd.get_dummies(df_test["category"]).columns
     predicted_class_label = np.array([test_categories[index] for index in y_pred_class_index])
-    print(classification_report(df_test["category"], predicted_class_label))
+    report = classification_report(df_test["category"], predicted_class_label, output_dict=True)
+    report_df = pd.DataFrame(report).transpose().round(2)
+    # save df results to cvs for later report
+    report_df.to_csv('./report/' + model.name + '.csv')
 
 
 def render_plot(model_name, history):
