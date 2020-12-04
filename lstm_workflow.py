@@ -3,6 +3,7 @@ import data.preprocess as dp
 from models.lstm import lstm_model as lstm_model
 from models.lstm import evaluate as lstm_evaluate
 import models.lstm.lstm_predict as lstm_predict
+import utils.report_utils as rutils
 
 
 def prepare_data(data_column="question", classes_column="category"):
@@ -24,7 +25,8 @@ def lstm_dropout_model_unprocessed_data():
     history = lstm_model.train(model, X_train, y_train)
     # evaluate
     test_df = data.get_test_data()
-    lstm_evaluate.evaluate_lstm(model, X_test, y_test, test_df)
+    report_df = lstm_evaluate.evaluate_lstm(model, X_test, y_test, test_df)
+    rutils.df_to_styled_img(report_df, model.name)
     lstm_evaluate.render_plot(model.name, history)
     test_df = data.get_test_data()
     lstm_predict.print_predictions(model, tokenizer, X_test, test_df)
@@ -94,6 +96,6 @@ def export_plot_models():
 if __name__ == '__main__':
     # tf_utils.activate_compatibility_allow_growth()
     lstm_dropout_model_unprocessed_data()
-    lstm2_dense2_model_unprocessed_data()
-    lstm3_model_unprocessed_data()
+    # lstm2_dense2_model_unprocessed_data()
+    # lstm3_model_unprocessed_data()
     # export_plot_models()
