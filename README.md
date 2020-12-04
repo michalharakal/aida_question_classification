@@ -23,8 +23,8 @@ Category classification
 
 
 ## Presentation
- [Resulting presentation can be seen as PDF here](report/Question%20Classification%20Project.pdf)
- [Resulting presentation can be seen as PDF here](report/Report%20Group%20A.pdf)
+ - [Resulting Presentation can be seen as PDF here](report/Question%20Classification%20Project.pdf)
+ - [Resulting Report can be seen as PDF here](report/Report%20Group%20A.pdf)
 
 
 ## Initial playground
