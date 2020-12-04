@@ -16,6 +16,9 @@ def evaluate_lstm(model, X_test, y_test, df_test):
     report_df = pd.DataFrame(report).transpose().round(2)
     # save df results to cvs for later report
     report_df.to_csv('./report/' + model.name + '.csv')
+    return report_df
+
+
 
 
 def render_plot(model_name, history):
