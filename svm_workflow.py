@@ -89,14 +89,16 @@ def main():
 
     # defining main test and train data of main categories
     # df col with text and cat/subcategory to be used
-    df_col = 'text_stopwords'
+    #df_col = 'text_stopwords'
+    df_col = 'question'
+    # cat
     # category = 'subcategory'
     category = 'category'
 
-    X_train = df_train[df_col]  # question - data regex, stopwords, lem
-    y_train = df_train[category]  # using main category
-    X_test = df_test[df_col]  # question - data not cleaned
-    y_test = df_test[category]  # using main category
+    X_train = df_train[df_col]
+    y_train = df_train[category]
+    X_test = df_test[df_col]
+    y_test = df_test[category]
 
 
     ##############################
