@@ -2,10 +2,10 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import glob
 import os
-
+import seaborn as sns
+import imgkit
 
 #%%
-
 
 files = glob.glob('report/question_*.csv')
 lstm_files = glob.glob('report/LSTM*.csv')
@@ -28,4 +28,10 @@ df_pv = df.pivot_table(columns=['filename'], index=['category']).round(2)
 
 print(df_pv)
 
+#%%
+
+cm = sns.light_palette("seagreen", as_cmap=True)
+styled_table = df_pv.style.background_gradient(cmap=cm)
+html = styled_table.render()
+imgkit.from_string(html, './report/styled_table.png')
 
