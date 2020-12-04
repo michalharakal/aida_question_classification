@@ -8,6 +8,8 @@ import os
 
 
 files = glob.glob('report/question_*.csv')
+lstm_files = glob.glob('report/LSTM*.csv')
+files = files + lstm_files
 
 df = pd.concat([pd.read_csv(fp).assign(filename=os.path.basename(fp).split(',')[0]) for fp in files])
 
