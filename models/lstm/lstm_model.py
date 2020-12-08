@@ -1,10 +1,10 @@
 import numpy
-from keras.models import Sequential
-from keras.layers import Dense
-from keras.layers import Dropout
-from keras.layers import LSTM
-from keras.layers import Embedding
-from keras.backend import clear_session
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense
+from tensorflow.keras.layers import Dropout
+from tensorflow.keras.layers import LSTM
+from tensorflow.keras.layers import Embedding
+from tensorflow.keras.backend import clear_session
 from tensorflow.keras.models import load_model, save_model
 from tensorflow.keras.utils import plot_model
 import datetime

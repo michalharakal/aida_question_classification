@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-from keras.preprocessing import sequence
+from tensorflow.keras.preprocessing import sequence
 
 
 def print_predictions(model, tokenizer, test_X, test_df, category_column="category"):

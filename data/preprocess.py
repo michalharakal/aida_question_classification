@@ -1,8 +1,8 @@
 import utils.text_manipulation as txtm
 import pandas as pd
-from keras.preprocessing import sequence
+from tensorflow.keras.preprocessing import sequence
 
-from keras.preprocessing.text import Tokenizer
+from tensorflow.keras.preprocessing.text import Tokenizer
 
 
 def common_tokenizer(df_train, df_test, column="question"):
