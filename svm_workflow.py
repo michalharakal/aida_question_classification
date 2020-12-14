@@ -1,12 +1,17 @@
+import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
 import data.get_data as data
 import utils.text_manipulation as txtm
+import models.spacy_module as spacy_mod
 
-from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
+from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer, TfidfTransformer
 from sklearn.model_selection import cross_val_score
-from sklearn.pipeline import Pipeline
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
+from sklearn.base import BaseEstimator, TransformerMixin  # for definition of custom transformers
+
+from sklearn.pipeline import Pipeline, FeatureUnion
 from sklearn.linear_model import LogisticRegressionCV
 from sklearn import svm
 from sklearn.metrics import plot_confusion_matrix, confusion_matrix, accuracy_score, classification_report
@@ -41,6 +46,10 @@ def preprocess_stpw_clean_lem(df_train, df_test):
     df_train = txtm.preprocess_dataframe(df_train)
     df_test = txtm.preprocess_dataframe(df_test)
 
+    # testing
+    df_train['spacy'] = df_train.question.apply(spacy_mod.process_question)
+    df_test['spacy'] = df_test.question.apply(spacy_mod.process_question)
+
     return df_train, df_test
 
 
@@ -66,7 +75,7 @@ def pipeline_results(pipeline, X_test, y_test, name='pipe'):
     df.to_csv('./report/svm_' + name + '.csv')
 
     # activate one or the other for of a confusion_matrix
-    plot = True
+    plot = False
     if plot:
         plot_confusion_matrix(pipeline, X_test, y_test, values_format="", cmap=plt.cm.Blues)
         plt.title(name)
@@ -75,6 +84,27 @@ def pipeline_results(pipeline, X_test, y_test, name='pipe'):
     else:
         val_confusion_matrix = confusion_matrix(y_test, y_pred_pipeline)
         print(f'Confusion Matrix: \n{val_confusion_matrix}')
+
+
+class TextExtractor(BaseEstimator, TransformerMixin):
+    def __init__(self, column):
+        self.column = column
+
+    def transform(self, data):
+        return np.asarray(data[self.column]).astype(str)
+
+    def fit(self, *_):
+        return self
+
+
+class SpacyTransformer(BaseEstimator, TransformerMixin):
+    def transform(self, X, **transform_params):
+        spacyed = pd.DataFrame(X, columns=['spacy'])
+        spacyed = spacyed.spacy.str.split('|', expand=True)
+        return spacyed
+
+    def fit(self, X, y=None, **fit_params):
+        return self
 
 
 def main():
@@ -89,10 +119,13 @@ def main():
 
     # defining main test and train data of main categories
     # df col with text and cat/subcategory to be used
-    df_col = 'text_stopwords'
-    # df_col = 'question'
+    df_col_tdf = df_col = 'question'  # 'text_stopwords'
+
+    X_train_cols = df_train[[df_col, 'spacy']]
+    X_test_cols = df_test[[df_col, 'spacy']]
+
     # cat
-    # category = 'subcategory'
+    #category = 'subcategory'
     category = 'category'
 
     X_train = df_train[df_col]
@@ -101,13 +134,43 @@ def main():
     y_test = df_test[category]
 
 
+    # simple applied to df does not work in pipeline
+    # df_spacy_train = pd.get_dummies(df_train.spacy.str.split('|', expand=True))
+    # df_spacy_test = pd.get_dummies(df_test.spacy.str.split('|', expand=True))
+
+    # so we have to build pipelines for the features
+
+    spacy_transformer = Pipeline([
+        ('desc_extractor', TextExtractor('spacy')),
+        ('SpacyTransformer', SpacyTransformer()),
+        ('one_hot', OneHotEncoder()),
+    ])
+
+    desc_df_col_featurizer = Pipeline([
+        ('desc_extractor', TextExtractor(df_col_tdf)),
+        ('CountVectorizer', CountVectorizer(stop_words=[], ngram_range=(1, 2)))
+        #, ('tf_idf', TfidfTransformer())
+
+
+    ])
+
+    combined_features = FeatureUnion([("spacy_transformer", spacy_transformer), ("data_vec", desc_df_col_featurizer)])
+
     ##############################
     # prediction
 
     pipe_tf = Pipeline(steps=[
-        ('data_vec', TfidfVectorizer()),
+        ('data_vec', desc_df_col_featurizer),
         ('model', svm.LinearSVC())  # C=1.0
     ])
+
+    pipe_tf_fu = Pipeline(steps=[
+        ('combined_features_train', combined_features),
+        ('model', svm.LinearSVC())  # C=1.0
+    ])
+
+    """
+    
     print('cross_val_score, TfidfVectorized :', cross_val_score(pipe_tf, X_train, y_train).mean())
 
     pipe_cv = Pipeline(steps=[
@@ -151,15 +214,21 @@ def main():
     ])
     print('cross_val_score, pipe_cv_ng33 ngram_range=(3, 3) :',
           cross_val_score(pipe_cv_ng33, X_train, y_train).mean())
-
+    
+    """
     ##############################
     # Measuring the performance
     # Testing the pipeline models using Count Vectorized and again with Tfi-df Vectorized.
 
-    pipe_tf.fit(X_train, y_train)
+    pipe_tf.fit(X_train_cols, y_train)
     print('results TfidfVectorized pipeline fkt:')
-    pipeline_results(pipe_tf, X_test, y_test, df_col + '_pipe_TfidfVect')
+    pipeline_results(pipe_tf, X_test_cols, y_test, df_col + '_pipe_TfidfVect')
 
+    pipe_tf_fu.fit(X_train_cols, y_train)
+    print('results TfidfVectorized pipeline fkt:')
+    pipeline_results(pipe_tf_fu, X_test_cols, y_test, df_col + '_pipe_TfidfVect')
+
+    """
     pipe_cv.fit(X_train, y_train)
     print('results CountVectorized pipeline fkt:')
     pipeline_results(pipe_cv, X_test, y_test, df_col + '_pipe_cv')
@@ -183,6 +252,7 @@ def main():
     pipe_cv_ng33.fit(X_train, y_train)
     print('results pipe_cv_ng33 ngram_range=(3, 3) fkt:')
     pipeline_results(pipe_cv_ng33, X_test, y_test, df_col + '_pipe_cv_ng33')
+    """
 
 
 if __name__ == '__main__':
