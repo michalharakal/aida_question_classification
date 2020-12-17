@@ -10,6 +10,8 @@ def evaluate_model(X_test, history, model, y_test):
     test_df = data.get_test_data()
     report_df = lstm_evaluate.evaluate_lstm(model, X_test, y_test, test_df)
     rutils.df_to_styled_img(report_df, model.name)
+    lstm_evaluate.training_accuracy_plot(model, history)
+    lstm_evaluate.test_confusion_matrix(model, X_test, y_test, test_df)
 
 
 def prepare_data(data_column="question", classes_column="category"):
@@ -60,7 +62,6 @@ def lstm2_dense2_model_unprocessed_data():
 
 
 def evaluate_plot_models():
-    # TODO delete
     (X_train, y_train), (X_test, y_test), sequence_length, vocab_size, tokenizer = prepare_data()
     model_dropout = lstm_model.build_classifier_lstm_dropout(vocab_size, sequence_length, y_train.shape[1])
     lstm_model.plot_model_summary(model_dropout)
@@ -72,9 +73,6 @@ def evaluate_plot_models():
 
 if __name__ == '__main__':
     # tf_utils.activate_compatibility_allow_growth()
-    lstm_evaluate.lstm_report_plot()
-    """
     lstm_dropout_model_unprocessed_data()
     lstm2_dense2_model_unprocessed_data()
     lstm3_model_unprocessed_data()
-    """

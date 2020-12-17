@@ -31,8 +31,8 @@ df[['Category', 'f1', 'filename']]
 df_pv = df.pivot_table(columns=['filename'], index=['Category']).round(2)
 
 df_f1 = df_pv['f1']
-# print(df_f1.columns)
-df_f1.columns = ['Original TfidfVect', 'Original ng11',
+print(df_f1.columns)
+"""df_f1.columns = ['Original TfidfVect', 'Original ng11',
                  'Original ng12', 'Original ng13',
                  'Original ng22', 'Original ng23',
                  'Original ng33',
@@ -42,7 +42,7 @@ df_f1.columns = ['Original TfidfVect', 'Original ng11',
                  'cleaned ng22',
                  'cleaned ng23',
                  'cleaned ng33']
-
+"""
 df_f1_transpose = df_f1.T
 
 # %%

@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-from sklearn.metrics import classification_report
+from sklearn.metrics import classification_report, confusion_matrix
 import numpy as np
 import pandas as pd
 import os
@@ -36,6 +36,14 @@ def training_accuracy_plot(model_name, history):
     plt.legend()
     plt.savefig(f"plots/{model_name}.png")
     plt.show()
+
+
+def test_confusion_matrix(model, X_test, y_test, df_test):
+    y_pred = model.predict(X_test, batch_size=64, verbose=1)
+    y_pred_class_index = np.argmax(y_pred, axis=1)
+    test_categories = pd.get_dummies(df_test["category"]).columns
+    predicted_class_label = np.array([test_categories[index] for index in y_pred_class_index])
+    confusion = confusion_matrix(y_test, y_pred)
 
 
 def lstm_report_plot(plot_name='lstm_f1_results.png'):

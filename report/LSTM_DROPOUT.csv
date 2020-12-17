@@ -1,4 +1,4 @@
-Add accurat,precision,recall,f1-score,support
+,precision,recall,f1-score,support
 ABBR,1.0,0.78,0.88,9.0
 DESC,0.85,0.96,0.9,138.0
 ENTY,0.76,0.81,0.78,94.0
