@@ -52,8 +52,9 @@ def encode_classes(train_df, test_df, category_col="category"):
 def preprocess_data(train_df, test_df, data_column="question", classes_column="category"):
     train_df = txtm.preprocess_dataframe(train_df)
     test_df = txtm.preprocess_dataframe(test_df)
+
     sequenced_train, sequenced_test, sequence_length, vocab_size_train, tokenizer = \
         create_sequences(train_df, test_df, data_column)
     encoded_train, encoded_test = encode_classes(train_df, test_df, classes_column)
     return (sequenced_train, encoded_train), (
-    sequenced_test, encoded_test), sequence_length, vocab_size_train, tokenizer
+        sequenced_test, encoded_test), sequence_length, vocab_size_train, tokenizer

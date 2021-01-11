@@ -72,7 +72,8 @@ def evaluate_plot_models():
 
 if __name__ == '__main__':
     # tf_utils.activate_compatibility_allow_growth()
-    lstm_evaluate.lstm_report_plot()
+    #lstm_evaluate.lstm_report_plot()
+    lstm_dropout_model_unprocessed_data()
     """
     lstm_dropout_model_unprocessed_data()
     lstm2_dense2_model_unprocessed_data()

@@ -76,7 +76,7 @@ def compute_metrics(pred):
 
 
 # data loading
-def load_data(filename, text_col_name, label_col_name, label_list, tokenizer, max_seq_len):
+def load_data(filename, tokenizer):
     # load data
     df = pd.read_csv(filename, sep='\t')
     data_text = df[text_col_name].tolist()
@@ -111,21 +111,14 @@ def main():
     # preprocess and create train dataset
     labeled_dataset_train, _ = load_data(
         filename=train_data_file,
-        text_col_name=text_col_name,
-        label_col_name=label_col_name,
-        label_list=label_list,
-        tokenizer=tokenizer,
-        max_seq_len=max_seq_len,
+
+        tokenizer=tokenizer
     )
 
     # preprocess and create test dataset
     labeled_dataset_test, _ = load_data(
         filename=test_data_file,
-        text_col_name=text_col_name,
-        label_col_name=label_col_name,
-        label_list=label_list,
-        tokenizer=tokenizer,
-        max_seq_len=max_seq_len,
+        tokenizer=tokenizer
     )
 
     # calculate more parameters
@@ -178,7 +171,8 @@ def main():
 
     # train and get results
     trainer.train()
-    train_result = trainer.state.log_history[-1]
+    train_result = trainer.state.log_history[-2]
+
     print(train_result)
 
 
