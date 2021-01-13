@@ -14,8 +14,6 @@ import datasets
 
 # training params
 lang_model = 'german-nlp-group/electra-base-german-uncased'
-train_data_file = './models/transformers/germeval18/train.tsv'
-test_data_file = './models/transformers/germeval18/test.tsv'
 text_col_name = 'text'
 label_col_name = 'coarse_label'
 n_gpu = 1
@@ -71,6 +69,7 @@ def encode_data(df, tokenizer):
     data_label = df["category"].tolist()
 
     # encode label
+    global label_list
     label_list = df["category"].unique().tolist()
     data_label_encoded = [label_list.index(l) for l in data_label]
     assert len(data_label_encoded) == len(data_label)
@@ -90,15 +89,6 @@ def encode_data(df, tokenizer):
     print(f'LabeledDataset of len {len(labeled_dataset)} loaded. Source file: ')
 
     return labeled_dataset, data_label_encoded
-
-
-"""
-   
-
-   
-
-   
-    """
 
 
 # set hyperparameters
