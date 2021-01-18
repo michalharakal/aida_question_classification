@@ -2,21 +2,18 @@ beautifulsoup4==4.9.3
 Flask==1.1.2
 Flask-WTF==0.14.3
 future==0.18.2
-Keras==2.4.3
-Keras-Preprocessing==1.1.2
 matplotlib==3.3.3
 nltk==3.5
-numpy==1.19.4
-pandas==1.1.4
-scikit-learn==0.23.2
-scipy==1.5.4
-seaborn==0.11.0
+numpy~=1.19.5
+pandas==1.2.0
+scikit-learn==0.24.0
+scipy==1.6.0
+seaborn==0.11.1
 
 torch==1.7.1
 tornado==6.1
-transformers==4.0.1
+transformers==4.2.1
 
-requests==2.22.0
-tensorflow-cpu==2.3.1
-tensorflow==2.3.1
+requests==2.25.1
 datasets==1.2.1
+imgkit~=1.0.2
