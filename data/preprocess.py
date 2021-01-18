@@ -60,6 +60,3 @@ def preprocess_data(train_df, test_df, data_column="question", classes_column="c
         sequenced_test, encoded_test), sequence_length, vocab_size_train, tokenizer
 
 
-def preprocess_data_only(df):
-    return txtm.preprocess_dataframe(df)
-

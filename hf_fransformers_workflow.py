@@ -1,16 +1,13 @@
-import pandas as pd
 import sklearn
 import math
-import numpy as np
-import random
 import torch
 
 import data.get_data as data
-import data.preprocess as dp
+import utils.text_manipulation as txtm
 
 from transformers import AutoConfig, logging, AutoModelForSequenceClassification, AutoTokenizer, TrainingArguments, \
     Trainer
-import datasets
+
 
 # training params
 lang_model = 'german-nlp-group/electra-base-german-uncased'
