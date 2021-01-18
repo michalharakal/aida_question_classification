@@ -21,6 +21,15 @@ def evaluate_lstm(model, X_test, y_test, df_test):
     return report_df
 
 
+def evaluate_transformer(model_name, y_test, y_predicted):
+
+    report = classification_report(y_test, y_predicted, output_dict=True)
+    report_df = pd.DataFrame(report).transpose().round(2)
+    # save df results to cvs for later report
+    report_df.to_csv('./report/' + model_name + '.csv')
+    return report_df
+
+
 def training_accuracy_plot(model_name, history):
     """
     Plot and export into the image the accuracy and loss values from history data

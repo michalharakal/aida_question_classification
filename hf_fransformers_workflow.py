@@ -4,10 +4,10 @@ import torch
 
 import data.get_data as data
 import utils.text_manipulation as txtm
+from models.lstm import evaluate as transformer_evaluate
 
 from transformers import AutoConfig, logging, AutoModelForSequenceClassification, AutoTokenizer, TrainingArguments, \
     Trainer
-
 
 # training params
 lang_model = 'german-nlp-group/electra-base-german-uncased'
@@ -60,7 +60,7 @@ def load_data():
 
 def encode_data(df, tokenizer):
     # preprocess
-    train_df = dp.preprocess_data_only(df)
+    train_df = txtm.preprocess_dataframe(df)
 
     data_text = train_df["question"].tolist()
     data_label = df["category"].tolist()
@@ -102,7 +102,7 @@ def main():
     tokenizer = AutoTokenizer.from_pretrained(lang_model)
     train_df, test_df = load_data()
     labeled_dataset_train, _ = encode_data(train_df, tokenizer)
-    labeled_dataset_test, _ = encode_data(test_df, tokenizer)
+    labeled_dataset_test, test_labels = encode_data(test_df, tokenizer)
 
     # calculate more parameters
     total_batch_size = batch_size_per_gpu * n_gpu
@@ -156,6 +156,13 @@ def main():
     trainer.train()
     train_result = trainer.state.log_history[-2]
 
+    predicted = trainer.predict(labeled_dataset_test)
+
+    print(predicted[2])
+    predicted_labels = list(predicted[1])
+    transformer_evaluate.evaluate_transformer("transformer",  predicted_labels, test_labels)
+
+    print(predicted)
     print(train_result)
 
 
