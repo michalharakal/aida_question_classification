@@ -17,3 +17,5 @@ transformers==4.2.1
 requests==2.25.1
 datasets==1.2.1
 imgkit~=1.0.2
+tensorflow~=2.4.1
+optuna~=2.5.0

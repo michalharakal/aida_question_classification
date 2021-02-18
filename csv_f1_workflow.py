@@ -65,6 +65,6 @@ df_f1.to_html('f1.html')
 # %%
 
 cm = sns.light_palette("seagreen", as_cmap=True)
-styled_table = df_f1.style.background_gradient(cmap=cm)
+styled_table = df_f1.T.style.background_gradient(cmap=cm)
 html = styled_table.render()
 imgkit.from_string(html, './report/styled_table.png')
