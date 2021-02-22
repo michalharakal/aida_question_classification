@@ -4,6 +4,7 @@ from tensorflow.keras.layers import Dense
 from tensorflow.keras.layers import Dropout
 from tensorflow.keras.layers import LSTM
 from tensorflow.keras.layers import Embedding
+from tensorflow.keras.optimizers import SGD
 from tensorflow.keras.backend import clear_session
 from tensorflow.keras.models import load_model, save_model
 from tensorflow.keras.utils import plot_model
@@ -86,7 +87,11 @@ def build_classifier_lstm_dropout(vocab_size, seq_length, categories_count, mode
         model.add(Dropout(0.5))
         model.add(Dense(categories_count, activation='softmax'))
 
-        model.compile(loss='categorical_crossentropy', optimizer='rmsprop', metrics=['accuracy'])
+        model.compile(
+            loss='categorical_crossentropy',
+            optimizer=SGD(lr=0.010425522961956299, momentum=0.7564531718417626, nesterov=True),
+
+            metrics=['accuracy'])
         print(model.summary())
         return model
     else:
@@ -140,7 +145,7 @@ def evaluate(model, X_test, y_test):
 def train(model, X_train, Y_train):
     latest_local_history = load_latest_local_history(model)
     if new_model_needed(model.name) or latest_local_history is None:
-        history = model.fit(X_train, Y_train, batch_size=32, epochs=5, verbose=1, validation_split=0.1)
+        history = model.fit(X_train, Y_train, batch_size=32, epochs=20, verbose=1, validation_split=0.1)
         save_model_locally(model)
         save_history_locally(model, history)
         return history.history
