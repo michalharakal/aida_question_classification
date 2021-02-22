@@ -48,7 +48,7 @@ def create_model(trial, seq_length, categories_count, vocab_size):
     # Compile model.
     model.compile(
         optimizer=tf.keras.optimizers.SGD(lr=lr, momentum=momentum, nesterov=True),
-        loss="sparse_categorical_crossentropy",
+        loss="categorical_crossentropy",
         metrics=["accuracy"],
     )
 
